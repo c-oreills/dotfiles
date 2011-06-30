@@ -22,6 +22,8 @@ alias grr='git remote rm'
 alias gpl='git pull'
 alias gcl='git clone'
 
+# Port forwarding
+function pf () { screen -d -m -S pf_$1_$2 bash -c "ssh -Nv -L $2:127.0.0.1:$2 $1"; } 
 
 ### Work specific ###
 if [ -f ~/.bash_aliases_work ]; then
