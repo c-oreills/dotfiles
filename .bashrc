@@ -101,3 +101,11 @@ fi
 if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
     . /etc/bash_completion
 fi
+
+
+# Bash alias completer from
+# http://stackoverflow.com/questions/342969/how-do-i-get-bash-completion-to-work-with-aliases/1793178#1793178
+# Enables completion for aliases
+if [ -f ~/.bash_alias_completer ]; then
+    . ~/.bash_alias_completer
+fi
