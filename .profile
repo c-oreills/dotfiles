@@ -21,4 +21,9 @@ if [ -d "$HOME/.bin" ] ; then
     PATH="$HOME/.bin:$PATH"
 fi
 
+# initialize sshagent if it exists
+if [ -f "/home/christy/.profile_sshagent" ]; then
+    . "/home/christy/.profile_sshagent"
+fi
+
 RUBYOPT=rubygems
