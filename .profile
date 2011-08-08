@@ -26,4 +26,9 @@ if [ -f "/home/christy/.profile_sshagent" ]; then
     . "/home/christy/.profile_sshagent"
 fi
 
+# include work settings if work file exists
+if [ -f "/home/christy/.profile_work" ]; then
+    . "/home/christy/.profile_work"
+fi
+
 RUBYOPT=rubygems
