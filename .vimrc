@@ -112,11 +112,10 @@ set pastetoggle=<F11>
 "
 " Indentation settings according to personal preference.
 
-" Indentation settings for using 2 spaces instead of tabs.
-" Do not change 'tabstop' from its default value of 8 with this setup.
-set shiftwidth=2
-set softtabstop=2
+set shiftwidth=4
+set softtabstop=4
 set expandtab
+set smarttab
 
 
 "------------------------------------------------------------
@@ -154,6 +153,10 @@ map <F2> :NERDTreeToggle<CR>
 
 " Use pathogen to manage plugins
 call pathogen#infect()
+
+" Python options
+let python_highlight_all = 1
+au FileType python syn keyword pythonDecorator True None False self
 
 colorscheme relaxedgreen
 
