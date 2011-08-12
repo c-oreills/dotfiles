@@ -144,6 +144,9 @@ set langmap=hk,jh,kj
 " Allow saving of read only files
 cmap w!! w !sudo tee % > /dev/null
 
+" NERDTree toggling
+map <F2> :NERDTreeToggle<CR>
+
 "------------------------------------------------------------
 " Misc
 "
