@@ -1,10 +1,3 @@
-" URL: http://vim.wikia.com/wiki/Example_vimrc
-" Authors: http://vim.wikia.com/wiki/Vim_on_Freenode
-" Description: A minimal, but feature rich, example .vimrc. If you are a
-"              newbie, basing your first .vimrc on this file is a good choice.
-"              If you're a more advanced user, building your own .vimrc based
-"              on this file is still a good idea.
-
 "------------------------------------------------------------
 " Features {{{1
 "
@@ -125,11 +118,6 @@ set shiftwidth=2
 set softtabstop=2
 set expandtab
 
-" Indentation settings for using hard tabs for indent. Display tabs as
-" two characters wide.
-"set shiftwidth=2
-"set tabstop=2
-
 
 "------------------------------------------------------------
 " Mappings {{{1
@@ -145,20 +133,24 @@ map Y y$
 nnoremap <C-L> :nohl<CR><C-L>
 
 " Copy/Paste mappings
-
 vmap <C-c> "+y
 nmap <C-c> "+yiw
 vmap <C-v> "+p
 imap <C-v> <Esc>"+pa
 
 " Colemak navigation remap
-
 set langmap=hk,jh,kj
 
-"------------------------------------------------------------
-"
-"
+" Allow saving of read only files
 cmap w!! w !sudo tee % > /dev/null
+
+"------------------------------------------------------------
+" Misc
+"
+
+
+" Use pathogen to manage plugins
+call pathogen#infect()
 
 colorscheme relaxedgreen
 
