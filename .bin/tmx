@@ -39,18 +39,18 @@ else
             tmux kill-session -t $old_session_id
         done
 
-        #base_session_full=$(trim `tmux ls | grep -P "^$base_session" | sed "s/^($base_session.*): .*$/\1/"`)
-        #echo $base_session_full
+        # Get the full name of the base session, up to the colon
+        base_session_full=$(trim `tmux ls | grep -P "^$base_session" | sed "s/^\($base_session[^:]*\): .*$/\1/"`)
 
-        echo "Launching copy of base session $base_session ..."
+        echo "Launching copy of base session $base_session_full ..."
 
         # Find a session prefix number that hasn't already been used
         num_prefix=1
-        while [[ $(trim `tmux ls | grep -P "^#$num_prefix:$base_session" | wc -l`) -gt 0 ]];
+        while [[ $(trim `tmux ls | grep -P "^#$num_prefix:$base_session_full" | wc -l`) -gt 0 ]];
         do
             num_prefix=`expr $num_prefix + 1`
         done
-        session_id="#$num_prefix:$base_session"
+        session_id="#$num_prefix:$base_session_full"
         # Create a new session (without attaching it) and link to base session 
         # to share windows
         tmux new-session -d -t $base_session -s $session_id
