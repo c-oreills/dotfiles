@@ -33,3 +33,7 @@
 [submodule "vim-coffee-script"]
     path = .vim/bundle/vim-coffee-script
     url = https://github.com/kchmck/vim-coffee-script.git
+
+[submodule ".tmux/tmux-extra"]
+	path = .tmux/tmux-extra
+	url = git@github.com:christyor73/tmux-extra.git
