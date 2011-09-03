@@ -32,3 +32,4 @@ if [ -f "/home/christy/.profile_work" ]; then
 fi
 
 RUBYOPT=rubygems
+export CLOJURE_EXT=~/.clojure
