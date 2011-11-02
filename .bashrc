@@ -109,3 +109,8 @@ fi
 if [ -f ~/.bash_alias_completer ]; then
     . ~/.bash_alias_completer
 fi
+
+# include virtualenvwrapper script if it exists
+if [ -f /usr/local/bin/virtualenvwrapper.sh ]; then
+    . /usr/local/bin/virtualenvwrapper.sh 
+fi
