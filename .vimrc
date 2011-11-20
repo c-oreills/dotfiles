@@ -164,3 +164,6 @@ colorscheme relaxedgreen
 :set guioptions-=m  "remove menu bar
 :set guioptions-=T  "remove toolbar
 :set guioptions-=r  "remove right-hand scroll bar
+
+let vimclojure#ParenRainbow = 1
+let vimclojure#WantNailgun = 1
