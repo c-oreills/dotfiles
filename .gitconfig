@@ -1,5 +1,11 @@
 [color]
 	ui = true
+	branch = auto
+	diff = auto
+	log = auto
+	interactive = auto
+	status = auto
+	pager = true
 [user]
 	name = Christy O'Reilly
 	email = christy@oreills.co.uk
