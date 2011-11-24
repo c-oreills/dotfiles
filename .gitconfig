@@ -1,0 +1,7 @@
+[color]
+	ui = true
+[user]
+	name = Christy O'Reilly
+	email = christyor73@gmail.com
+[core]
+	editor = vim
