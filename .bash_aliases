@@ -11,7 +11,6 @@ alias ackl='ack --pager="less -R"'
 # Git aliases
 alias ga='git add'
 alias gp='git push'
-alias gpp='git pull; git push'
 alias gl='git log'
 alias gs='git status'
 alias gd='git diff'
@@ -20,10 +19,11 @@ alias gm='git commit -m'
 alias gma='git commit -am'
 alias gb='git branch'
 alias gc='git checkout'
-alias gra='git remote add'
-alias grr='git remote rm'
 alias gpl='git pull'
 alias gcl='git clone'
+alias gf='git fetch'
+alias gr='git merge'
+alias grf='git merge --ff-only'
 
 # Port forwarding
 function pf () { screen -d -m -S pf_$1_$2 bash -c "ssh -Nv -L $2:127.0.0.1:$2 $1"; } 
