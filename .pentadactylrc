@@ -1,0 +1,9 @@
+"1.0b7.2 "(created 2011/08/05 11:03:59)"
+
+loadplugins '\.(js|penta)$'
+group user
+map -modes=n,v h -builtin <count>k
+map -modes=n,v j -builtin <count>h
+map -modes=n,v k -builtin <count>j
+
+" vim: set ft=pentadactyl:
