@@ -31,5 +31,7 @@ if [ -f "/home/christy/.profile_work" ]; then
     . "/home/christy/.profile_work"
 fi
 
+[[ -s "/home/christy/.rvm/scripts/rvm" ]] && source "/home/christy/.rvm/scripts/rvm"  # This loads RVM into a shell session.
+
 RUBYOPT=rubygems
 export CLOJURE_EXT=~/.clojure
