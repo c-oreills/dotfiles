@@ -115,3 +115,8 @@ if [ -f /usr/local/bin/virtualenvwrapper.sh ]; then
     . /usr/local/bin/virtualenvwrapper.sh 
 fi
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
+
+# load in stderred
+if [ -f ~/.stderred/stderred.so ]; then
+    export LD_PRELOAD="$HOME/.stderred/stderred.so"
+fi
