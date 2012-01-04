@@ -29,6 +29,9 @@ alias grf='git merge --ff-only'
 function pf () { screen -d -m -S pf_$1_$2 bash -c "ssh -Nv -L $2:127.0.0.1:$2 $1"; } 
 function pfd () { screen -d -m -S pf_$1_$2_$3 bash -c "ssh -Nv -L $2:127.0.0.1:$3 $1"; } 
 
+# Clear .pyc files
+function pyclear () { find . -iname '*.pyc' -delete; }
+
 ### Home specific ###
 if [ -f ~/.bash_aliases_home ]; then
     . ~/.bash_aliases_home
