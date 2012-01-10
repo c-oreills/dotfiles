@@ -1,1 +1,2 @@
 --type-add=python=.haml
+-G^(?!.*migrations.*).*$
