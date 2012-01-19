@@ -160,6 +160,7 @@ let python_highlight_space_errors = 0
 au FileType python syn keyword pythonDecorator True None False self
 
 colorscheme relaxedgreen
+hi ColorColumn ctermbg=DarkGreen
 
 :set guioptions-=m  "remove menu bar
 :set guioptions-=T  "remove toolbar
