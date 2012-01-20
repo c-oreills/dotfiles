@@ -24,6 +24,7 @@ alias gcl='git clone'
 alias gf='git fetch'
 alias gr='git merge'
 alias grf='git merge --ff-only'
+alias gri='git rebase -i'
 
 # Port forwarding
 function pf () { screen -d -m -S pf_$1_$2 bash -c "ssh -Nv -L $2:127.0.0.1:$2 $1"; } 
