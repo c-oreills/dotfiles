@@ -22,16 +22,22 @@ if [ -d "$HOME/.bin" ] ; then
 fi
 
 # initialize sshagent if it exists
-if [ -f "/home/christy/.profile_sshagent" ]; then
-    . "/home/christy/.profile_sshagent"
+if [ -f "$HOME/.profile_sshagent" ]; then
+    . "$HOME/.profile_sshagent"
 fi
 
 # include work settings if work file exists
-if [ -f "/home/christy/.profile_work" ]; then
-    . "/home/christy/.profile_work"
+if [ -f "$HOME/.profile_work" ]; then
+    . "$HOME/.profile_work"
 fi
 
-[[ -s "/home/christy/.rvm/scripts/rvm" ]] && source "/home/christy/.rvm/scripts/rvm"  # This loads RVM into a shell session.
+# Load RVM into a shell session.
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
 
 RUBYOPT=rubygems
-export CLOJURE_EXT=~/.clojure
+export CLOJURE_EXT=$HOME/.clojure
+export CLOJURESCRIPT_HOME=$HOME/.clojurescript
+
+if [ -d "$CLOJURESCRIPT_HOME" ] ; then
+    PATH="$CLOJURESCRIPT_HOME:$PATH"
+fi

@@ -43,3 +43,6 @@
 [submodule ".stderred"]
 	path = .stderred
 	url = git://github.com/sickill/stderred.git
+[submodule ".clojurescript"]
+	path = .clojurescript
+	url = git://github.com/clojure/clojurescript.git
