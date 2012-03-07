@@ -39,5 +39,5 @@ export CLOJURE_EXT=$HOME/.clojure
 export CLOJURESCRIPT_HOME=$HOME/.clojurescript
 
 if [ -d "$CLOJURESCRIPT_HOME" ] ; then
-    PATH="$CLOJURESCRIPT_HOME:$PATH"
+    PATH="$CLOJURESCRIPT_HOME/bin:$PATH"
 fi
