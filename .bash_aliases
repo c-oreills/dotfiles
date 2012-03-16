@@ -10,6 +10,7 @@ alias ackl='ack --pager="less -R"'
 
 # Git aliases
 alias ga='git add'
+alias gap='git add -p'
 alias gp='git push'
 alias gl='git log'
 alias gs='git status'
