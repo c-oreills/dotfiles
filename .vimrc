@@ -137,6 +137,9 @@ nmap <C-c> "+yiw
 vmap <C-v> "+p
 imap <C-v> <Esc>"+pa
 
+" Ack plugin instasearch
+nmap <C-n> :Ack!<CR>
+
 " Colemak navigation remap
 set langmap=hk,jh,kj
 
@@ -168,3 +171,5 @@ hi ColorColumn ctermbg=DarkGreen
 
 let vimclojure#ParenRainbow = 1
 "let vimclojure#WantNailgun = 1
+
+let g:ctrlp_switch_buffer = 1
