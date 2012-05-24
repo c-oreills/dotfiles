@@ -172,4 +172,5 @@ hi ColorColumn ctermbg=DarkGreen
 let vimclojure#ParenRainbow = 1
 "let vimclojure#WantNailgun = 1
 
-let g:ctrlp_switch_buffer = 1
+let g:ctrlp_switch_buffer = 0
+let g:ctrlp_cmd = 'CtrlPMixed'
