@@ -38,11 +38,11 @@ function pyclear () { find . -iname '*.pyc' -delete; }
 function gsu () { pushd $(git rev-parse --show-toplevel) > /dev/null; git submodule sync; git submodule update; popd > /dev/null; }
 
 ### Home specific ###
-if [ -f ~/.bash_aliases_home ]; then
-    . ~/.bash_aliases_home
+if [ -f ~/.aliases_home ]; then
+    . ~/.aliases_home
 fi
 
 ### Work specific ###
-if [ -f ~/.bash_aliases_work ]; then
-    . ~/.bash_aliases_work
+if [ -f ~/.aliases_work ]; then
+    . ~/.aliases_work
 fi
