@@ -36,10 +36,7 @@
 
 [submodule ".tmux/tmux-extra"]
 	path = .tmux/tmux-extra
-	url = git@github.com:christyor73/tmux-extra.git
-[submodule ".vim/bundle/command-t"]
-	path = .vim/bundle/command-t
-	url = git://git.wincent.com/command-t.git
+	url = git@github.com:c-oreills/tmux-extra.git
 [submodule ".stderred"]
 	path = .stderred
 	url = git://github.com/sickill/stderred.git
