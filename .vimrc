@@ -174,3 +174,6 @@ let vimclojure#ParenRainbow = 1
 
 let g:ctrlp_switch_buffer = 0
 let g:ctrlp_cmd = 'CtrlPMixed'
+
+" Strip trailing whitespace from .py files
+autocmd BufWritePre *.py :%s/\s\+$//e
