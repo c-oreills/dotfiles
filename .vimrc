@@ -137,6 +137,10 @@ nmap <C-c> "+yiw
 vmap <C-v> "+p
 imap <C-v> <Esc>"+pa
 
+" Uncomment for use with X11 forwarding
+"vmap <C-c> :!xclip -f -sel clip<CR>
+"map <C-v> :r!xclip -o -sel clip<CR>
+
 " Ack plugin instasearch
 nmap <C-n> :Ack!<CR>
 
