@@ -1,4 +1,4 @@
 --type-add=python=.haml
 --type-add=js=.coffee
--G^(?!.*migrations.*).*$
+-G^(?!.*migrations)(?!.*js/compiled)(?!.*js/templates).*$
 --noxml

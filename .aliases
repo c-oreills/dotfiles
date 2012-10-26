@@ -5,8 +5,9 @@ alias du='du -h'
 # Handy shell opener
 alias go='gnome-open'
 
-# Paged ack
-alias ackl='ack --pager="less -R"'
+# ack
+alias ack='ack-grep'
+alias ackl='ack-grep --pager="less -R"'
 
 # Git aliases
 alias ga='git add'
