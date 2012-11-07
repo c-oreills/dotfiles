@@ -1,4 +1,5 @@
 --type-add=python=.haml
 --type-add=js=.coffee
+--type-add=ruby=.pill
 -G^(?!.*migrations)(?!.*js/compiled)(?!.*js/templates).*$
 --noxml
