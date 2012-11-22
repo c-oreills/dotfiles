@@ -181,3 +181,13 @@ let g:ctrlp_cmd = 'CtrlPMixed'
 
 " Strip trailing whitespace from .py files
 autocmd BufWritePre *.py :%s/\s\+$//e
+
+" Add python path to to vim path so we can gf better
+python << EOF
+import os
+import sys
+import vim
+for p in sys.path:
+    if os.path.isdir(p):
+        vim.command(r"set path+=%s" % (p.replace(" ", r"\ ")))
+EOF
