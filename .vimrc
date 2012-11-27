@@ -153,6 +153,9 @@ cmap w!! w !sudo tee % > /dev/null
 " NERDTree toggling
 map <F2> :NERDTreeToggle<CR>
 
+inoremap jj <Esc>
+set timeoutlen=200
+
 "------------------------------------------------------------
 " Misc
 "
