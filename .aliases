@@ -28,7 +28,7 @@ alias gr='git merge'
 alias grf='git merge --ff-only'
 alias gri='git rebase -i'
 
-function glt () { git log --format="format:commit %H %s" $* | tig }
+function glt () { git log --format="format:commit %H %s" $* | tig; }
 
 # Port forwarding
 function pf () { screen -d -m -S pf_$1_$2 bash -c "ssh -Nv -L $2:127.0.0.1:$2 $1"; } 
