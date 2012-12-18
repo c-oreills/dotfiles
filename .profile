@@ -21,6 +21,10 @@ if [ -d "$HOME/.bin" ] ; then
     PATH="$HOME/.bin:$PATH"
 fi
 
+if [ -d "$HOST/.clojurescript/bin" ] ; then
+    PATH="$HOME/.clojurescript/bin:$PATH"
+fi
+
 # initialize sshagent if it exists
 if [ -f "$HOME/.profile_sshagent" ]; then
     . "$HOME/.profile_sshagent"
