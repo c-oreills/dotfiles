@@ -21,11 +21,6 @@ if [ -d "$HOME/.bin" ] ; then
     PATH="$HOME/.bin:$PATH"
 fi
 
-# initialize sshagent if it exists
-if [ -f "$HOME/.profile_sshagent" ]; then
-    . "$HOME/.profile_sshagent"
-fi
-
 # include work settings if work file exists
 if [ -f "$HOME/.profile_work" ]; then
     . "$HOME/.profile_work"
