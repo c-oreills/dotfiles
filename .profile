@@ -36,3 +36,5 @@ export CLOJURESCRIPT_HOME=$HOME/.clojurescript
 if [ -d "$CLOJURESCRIPT_HOME" ] ; then
     PATH="$CLOJURESCRIPT_HOME/bin:$PATH"
 fi
+
+source `which virtualenvwrapper_lazy.sh`
