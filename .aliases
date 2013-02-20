@@ -28,6 +28,11 @@ alias gr='git merge'
 alias grf='git merge --ff-only'
 alias gri='git rebase -i'
 
+# Django
+alias m='./manage.py'
+alias mt='./manage.py test'
+alias ms='./manage.py shell'
+
 function glt () { git log --format="format:commit %H %s" $* | tig; }
 
 # Port forwarding
