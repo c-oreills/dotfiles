@@ -196,3 +196,8 @@ for p in sys.path:
 EOF
 
 let g:ycm_key_accept_first_completion = ['<Enter>']
+
+let vimrc_work = expand("~/.vimrc_work")
+if filereadable(vimrc_work)
+    exe "source " . vimrc_work
+endif
