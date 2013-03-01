@@ -143,6 +143,7 @@ imap <C-v> <Esc>"+pa
 
 " Ack plugin instasearch
 nmap <C-n> :Ack!<CR>
+nmap ? :Ack<SPACE>
 
 " Colemak navigation remap
 set langmap=hk,jh,kj
