@@ -184,7 +184,7 @@ let g:ctrlp_switch_buffer = 0
 let g:ctrlp_cmd = 'CtrlPMixed'
 
 " Strip trailing whitespace from .py files
-autocmd BufWritePre *.py :%s/\s\+$//e
+autocmd FileType python,clojure autocmd BufWritePre <buffer> :%s/\s\+$//e
 
 " Add python path to to vim path so we can gf better
 python << EOF
