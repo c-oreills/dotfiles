@@ -11,3 +11,5 @@
 	email = christy@oreills.co.uk
 [core]
 	editor = vim
+[push]
+        default = tracking
