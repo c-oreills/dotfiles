@@ -154,8 +154,10 @@ cmap w!! w !sudo tee % > /dev/null
 " NERDTree toggling
 map <F2> :NERDTreeToggle<CR>
 
+" Escape using jj
 inoremap jj <Esc>
 set timeoutlen=200
+
 
 "------------------------------------------------------------
 " Misc
@@ -180,11 +182,12 @@ hi ColorColumn ctermbg=DarkBlue
 let vimclojure#ParenRainbow = 1
 "let vimclojure#WantNailgun = 1
 
+" ctrl-p settings
 let g:ctrlp_switch_buffer = 0
 let g:ctrlp_cmd = 'CtrlPMixed'
 set wildignore+=*.pyc
 
-" Strip trailing whitespace from .py files
+" Strip trailing whitespace from python and clojure files
 autocmd FileType python,clojure autocmd BufWritePre <buffer> :%s/\s\+$//e
 
 " Add python path to to vim path so we can gf better
@@ -197,7 +200,10 @@ for p in sys.path:
         vim.command(r"set path+=%s" % (p.replace(" ", r"\ ")))
 EOF
 
-let g:ycm_key_accept_first_completion = ['<Enter>']
+
+"------------------------------------------------------------
+" Allow work specific settings to override anything else
+"
 
 let vimrc_work = expand("~/.vimrc_work")
 if filereadable(vimrc_work)
