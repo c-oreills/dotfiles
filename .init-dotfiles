@@ -12,7 +12,7 @@ mv dotfiles/.git .
 rm -rf dotfiles
 
 git reset
-git checkout .
+git checkout master
 
 git submodule update --init --recursive
 
