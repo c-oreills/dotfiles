@@ -1,0 +1,25 @@
+#!/bin/bash
+
+sudo apt-get install tmux ack-grep tig zsh
+
+eval `ssh-agent`
+ssh-add
+chsh -s `which zsh`
+
+cd ~
+git clone git@github.com:c-oreills/dotfiles.git -n
+mv dotfiles/.git .
+rm -rf dotfiles
+
+git reset
+git checkout .
+
+git submodule update --init --recursive
+
+cd ~/.vim
+./build_from_source
+
+cd bundle/YouCompleteMe
+./install.sh
+
+cd ~
