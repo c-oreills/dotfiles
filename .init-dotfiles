@@ -22,4 +22,5 @@ cd ~/.vim
 cd bundle/YouCompleteMe
 ./install.sh
 
-cd ~
+cd ~/.oh-my-zsh
+git checkout origin/master
