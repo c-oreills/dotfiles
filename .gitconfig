@@ -11,5 +11,6 @@
 	email = christy@oreills.co.uk
 [core]
 	editor = vim
+	excludesfile = ~/.gitignore_global
 [push]
         default = tracking
