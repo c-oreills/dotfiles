@@ -6,10 +6,6 @@
     path = .vim/bundle/nerdtree
     url = https://github.com/scrooloose/nerdtree.git
 
-[submodule "pyflakes-vim"]
-    path = .vim/bundle/pyflakes-vim
-    url = https://github.com/kevinw/pyflakes-vim.git
-
 [submodule "tslime.vim"]
     path = .vim/bundle/tslime.vim
     url = https://github.com/kikijump/tslime.vim.git
@@ -73,3 +69,6 @@
 [submodule ".vim/bundle/vim-abolish"]
 	path = .vim/bundle/vim-abolish
 	url = git@github.com:tpope/vim-abolish.git
+[submodule ".vim/bundle/syntastic"]
+	path = .vim/bundle/syntastic
+	url = git@github.com:scrooloose/syntastic.git
