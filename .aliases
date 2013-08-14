@@ -47,7 +47,7 @@ function pfd () { screen -d -m -S pf_$1_$2_$3 bash -c "ssh -Nv -L $2:127.0.0.1:$
 function pyclear () { find . -iname '*.pyc' -delete; }
 
 # Git submodule update
-function gsu () { pushd $(git rev-parse --show-toplevel) > /dev/null; git submodule sync; git submodule update; popd > /dev/null; }
+function gsu () { pushd $(git rev-parse --show-toplevel) > /dev/null; git submodule sync; git submodule update --init --recursive; popd > /dev/null; }
 
 ### Home specific ###
 if [ -f ~/.aliases_home ]; then
