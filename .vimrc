@@ -200,6 +200,9 @@ for p in sys.path:
         vim.command(r"set path+=%s" % (p.replace(" ", r"\ ")))
 EOF
 
+" Syntastic
+" Disable for python if favour of pyflakes-vim
+let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['python'] }
 
 "------------------------------------------------------------
 " Allow work specific settings to override anything else
