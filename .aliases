@@ -10,6 +10,7 @@ alias ack='ack-grep'
 alias ackl='ack-grep --pager="less -R"'
 
 # Git aliases
+alias git='~/.bin/hub'
 alias ga='git add'
 alias gap='git add -p'
 alias gp='git push'
