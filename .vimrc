@@ -158,6 +158,9 @@ map <F2> :NERDTreeToggle<CR>
 inoremap jj <Esc>
 set timeoutlen=200
 
+" Remap leader for make not so much RSI
+let mapleader = ","
+
 
 "------------------------------------------------------------
 " Misc
@@ -203,6 +206,8 @@ EOF
 " Syntastic
 " Disable for python if favour of pyflakes-vim
 let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['python'] }
+
+let g:paredit_smartjump=1
 
 "------------------------------------------------------------
 " Allow work specific settings to override anything else
