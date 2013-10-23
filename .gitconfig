@@ -14,3 +14,5 @@
 	excludesfile = ~/.gitignore_global
 [push]
         default = tracking
+[merge]
+        defaultToUpstream = true
