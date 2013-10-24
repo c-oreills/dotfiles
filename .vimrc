@@ -145,9 +145,6 @@ imap <C-v> <Esc>"+pa
 nmap <C-n> :Ack!<CR>
 nmap ? :Ack<SPACE>
 
-" Colemak navigation remap
-set langmap=hk,jh,kj
-
 " Allow saving of read only files
 cmap w!! w !sudo tee % > /dev/null
 
