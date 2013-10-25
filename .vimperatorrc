@@ -3,7 +3,3 @@
 source! /home/christy/.vimperatorrc.local
 
 " vim: set ft=vimperator:
-
-noremap h k
-noremap j h
-noremap k j
