@@ -151,8 +151,8 @@ cmap w!! w !sudo tee % > /dev/null
 " NERDTree toggling
 map <F2> :NERDTreeToggle<CR>
 
-" Escape using jj
-inoremap jj <Esc>
+" Escape using kk
+inoremap kk <Esc>
 set timeoutlen=200
 
 " Remap leader for make not so much RSI
