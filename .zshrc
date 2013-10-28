@@ -39,3 +39,8 @@ ZSH_THEME_GIT_PROMPT_PREFIX="(%{$fg[red]%}"
 if [ -f ~/.aliases ]; then
     . ~/.aliases
 fi
+
+# Use vi bindings
+bindkey -v
+bindkey "^R" history-incremental-search-backward
+bindkey "kk" vi-cmd-mode
