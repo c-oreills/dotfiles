@@ -167,6 +167,7 @@ let mapleader = ","
 
 " Use pathogen to manage plugins
 call pathogen#infect()
+Helptags
 
 " Python options
 let python_highlight_all = 1
