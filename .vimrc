@@ -142,6 +142,7 @@ imap <C-v> <Esc>"+pa
 "vmap <C-v> :r!xclip -o -sel clip<CR>
 
 " Ack plugin instasearch
+let g:ackprg="ack-grep -H --nocolor --nogroup --column -w"
 nmap <C-n> :Ack!<CR>
 nmap ? :Ack<SPACE>
 
