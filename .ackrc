@@ -1,5 +1,6 @@
 --type-add=python=.haml
---type-add=js=.coffee
+--type-add=coffee=.coffee
+--type-add=clojure=.cljs,.clj,.cljx
 --type-add=ruby=.pill
--G^(?!.*migrations)(?!.*js/compiled)(?!.*js/templates).*$
+-G^(?!.*migrations)(?!.*frontend/static).*$
 --noxml
