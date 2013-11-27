@@ -43,4 +43,5 @@ fi
 # Use vi bindings
 bindkey -v
 bindkey "^R" history-incremental-search-backward
+bindkey "^?" backward-delete-char
 bindkey "kk" vi-cmd-mode
