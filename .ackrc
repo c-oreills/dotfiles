@@ -1,6 +1,6 @@
 --type-add=python=.haml
---type-add=coffee=.coffee
---type-add=clojure=.cljs,.clj,.cljx
+--type-set=coffee=.coffee
+--type-set=clojure=.cljs,.clj,.cljx
 --type-add=ruby=.pill
 -G^(?!.*migrations)(?!.*frontend/static).*$
 --noxml
