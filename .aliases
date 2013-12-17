@@ -8,6 +8,7 @@ alias go='gnome-open'
 # ack
 alias ack='ack-grep'
 alias ackl='ack-grep --pager="less -R"'
+alias ak='ack-grep --python --coffee --clojure'
 
 # Git aliases
 function git() {~/.bin/hub $@}
