@@ -187,6 +187,7 @@ let vimclojure#ParenRainbow = 1
 " ctrl-p settings
 let g:ctrlp_switch_buffer = 0
 let g:ctrlp_cmd = 'CtrlPMixed'
+let g:ctrlp_custom_ignore = '\v\.(js)$'
 set wildignore+=*.pyc
 
 " Strip trailing whitespace from python and clojure files
