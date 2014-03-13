@@ -45,3 +45,6 @@ bindkey -v
 bindkey "^R" history-incremental-search-backward
 bindkey "^?" backward-delete-char
 bindkey "kk" vi-cmd-mode
+bindkey "e[1~" beginning-of-line # Home
+bindkey "e[4~" end-of-line # End
+bindkey "e[3~" delete-char # Del

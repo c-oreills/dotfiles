@@ -138,8 +138,8 @@ vmap <C-v> "+p
 imap <C-v> <Esc>"+pa
 
 " Uncomment for use with X11 forwarding
-"vmap <C-c> :w !xclip -f -sel clip<CR><CR>
-"vmap <C-v> :r!xclip -o -sel clip<CR>
+vmap <C-c> :w !xclip -f -sel clip<CR><CR>
+vmap <C-v> :r!xclip -o -sel clip<CR>
 
 " Ack plugin instasearch
 let g:ackprg="ack-grep -H --nocolor --nogroup --column -w"
