@@ -29,7 +29,7 @@ ZSH_THEME="robbyrussell"
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(git python command-not-found pip ssh-agent vi-mode)
+plugins=(git python command-not-found pip ssh-agent vi-mode rvm)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -48,3 +48,5 @@ bindkey "kk" vi-cmd-mode
 bindkey "e[1~" beginning-of-line # Home
 bindkey "e[4~" end-of-line # End
 bindkey "e[3~" delete-char # Del
+
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"

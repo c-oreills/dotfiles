@@ -38,3 +38,5 @@ if [ -d "$CLOJURESCRIPT_HOME" ] ; then
 fi
 
 source `which virtualenvwrapper_lazy.sh`
+
+PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
