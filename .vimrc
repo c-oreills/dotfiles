@@ -118,6 +118,60 @@ set expandtab
 set smarttab
 
 
+
+"------------------------------------------------------------
+" Bundle Scripts
+if has('vim_starting')
+  set runtimepath+=~/.vim/bundle/neobundle.vim/
+endif
+
+call neobundle#begin(expand('~/.vim/bundle'))
+
+" Let NeoBundle manage NeoBundle
+NeoBundleFetch 'Shougo/neobundle.vim'
+
+" Add or remove your Bundles here:
+NeoBundle 'Shougo/neomru.vim'
+NeoBundle 'Shougo/unite.vim'
+NeoBundle 'Shougo/vimproc.vim', {
+    \ 'build' : {
+    \     'windows' : 'tools\\update-dll-mingw',
+    \     'cygwin' : 'make -f make_cygwin.mak',
+    \     'mac' : 'make -f make_mac.mak',
+    \     'linux' : 'make',
+    \     'unix' : 'gmake',
+    \    },
+    \ }
+NeoBundle 'Valloric/YouCompleteMe', {
+            \ 'build' : {
+            \     'linux' : './install.sh --clang-completer',
+            \     'unix' : './install.sh --clang-completer',
+            \    },
+            \ }
+NeoBundle 'airblade/vim-gitgutter'
+NeoBundle 'kchmck/vim-coffee-script'
+NeoBundle 'klen/python-mode'
+NeoBundle 'michaeljsmith/vim-indent-object'
+NeoBundle 'rking/ag.vim'
+NeoBundle 'scrooloose/syntastic'
+NeoBundle 'tmhedberg/matchit'
+NeoBundle 'tpope/vim-abolish'
+NeoBundle 'tpope/vim-classpath'
+NeoBundle 'tpope/vim-commentary'
+NeoBundle 'tpope/vim-fugitive'
+NeoBundle 'tpope/vim-fugitive'
+NeoBundle 'tpope/vim-repeat'
+NeoBundle 'tpope/vim-surround'
+NeoBundle 'vim-scripts/paredit.vim'
+
+" Required:
+call neobundle#end()
+
+" If there are uninstalled bundles found on startup,
+" this will conveniently prompt you to install them.
+NeoBundleCheck
+
+
 "------------------------------------------------------------
 " Mappings {{{1
 "
@@ -140,11 +194,6 @@ imap <C-v> <Esc>"+pa
 " Uncomment for use with X11 forwarding
 vmap <C-c> :w !xclip -f -sel clip<CR><CR>
 vmap <C-v> :r!xclip -o -sel clip<CR>
-
-" Ack plugin instasearch
-let g:ackprg="ack-grep -H --nocolor --nogroup --column -w"
-nmap <C-n> :Ack!<CR>
-nmap ? :Ack<SPACE>
 
 " Allow saving of read only files
 cmap w!! w !sudo tee % > /dev/null
@@ -169,11 +218,6 @@ let mapleader = ","
 call pathogen#infect()
 Helptags
 
-" Python options
-let python_highlight_all = 1
-let python_highlight_space_errors = 0
-au FileType python syn keyword pythonDecorator True None False self
-
 colorscheme relaxedgreen
 hi ColorColumn ctermbg=DarkBlue
 
@@ -184,30 +228,41 @@ hi ColorColumn ctermbg=DarkBlue
 let vimclojure#ParenRainbow = 1
 "let vimclojure#WantNailgun = 1
 
-" ctrl-p settings
-let g:ctrlp_switch_buffer = 0
-let g:ctrlp_cmd = 'CtrlPMixed'
-let g:ctrlp_custom_ignore = '\v\.(js)$'
-set wildignore+=*.pyc
+" Unite.vim settings
+call unite#custom#source('file_rec', 'ignore_globs', ['/home/vagrant/.host'])
+call unite#custom#source('buffer,file,file_rec', 'sorters', 'sorter_selecta')
+call unite#filters#matcher_default#use(['matcher_fuzzy'])
+let g:unite_source_rec_async_command= 'ag --follow --nocolor --nogroup --hidden -g ""'
+
+nnoremap <C-p> :Unite -start-insert file_mru file_rec/async:!<cr>
+nnoremap ? :Unite grep:!<cr>
+nnoremap <C-n> :UniteWithCursorWord grep:!:-w<cr>
+
+let g:unite_source_history_yank_enable = 1
+nnoremap <leader>y :Unite history/yank<cr>
+
+" Custom mappings for the unite buffer
+autocmd FileType unite call s:unite_settings()
+function! s:unite_settings()
+  " Enable navigation with control-j and control-k in insert mode
+  imap <buffer> <C-j>   <Plug>(unite_select_next_line)
+  imap <buffer> <C-k>   <Plug>(unite_select_previous_line)
+endfunction
 
 " Strip trailing whitespace from python and clojure files
-autocmd FileType python,clojure autocmd BufWritePre <buffer> :%s/\s\+$//e
-
-" Add python path to to vim path so we can gf better
-python << EOF
-import os
-import sys
-import vim
-for p in sys.path:
-    if os.path.isdir(p):
-        vim.command(r"set path+=%s" % (p.replace(" ", r"\ ")))
-EOF
+autocmd FileType python,clojure,coffeescript autocmd BufWritePre <buffer> :%s/\s\+$//e
 
 " Syntastic
 " Disable for python if favour of pyflakes-vim
 let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['python'] }
 
 let g:paredit_smartjump=1
+
+" Pymode
+let g:pymode_folding = 0
+let g:pymode_lint_on_fly = 1
+let g:pymode_lint_cwindow = 0
+let g:pymode_syntax_space_errors = 0
 
 "------------------------------------------------------------
 " Allow work specific settings to override anything else
