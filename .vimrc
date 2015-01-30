@@ -1,8 +1,6 @@
 "------------------------------------------------------------
-" Features {{{1
+" Features
 "
-" These options and commands enable some very useful features in Vim, that
-" no user should have to live without.
 
 " Set 'nocompatible' to ward off unexpected things that your distro might
 " have made, as well as sanely reset options when re-sourcing .vimrc
@@ -18,9 +16,8 @@ syntax on
 
 
 "------------------------------------------------------------
-" Must have options {{{1
+" Must have options
 "
-" These are highly recommended options.
 
 " One of the most important options to activate. Allows you to switch from an
 " unsaved buffer without saving it first. Also allows you to keep an undo
@@ -48,12 +45,8 @@ set incsearch
 
 
 "------------------------------------------------------------
-" Usability options {{{1
+" Usability options
 "
-" These are options that users frequently set in their .vimrc. Some of them
-" change Vim's behaviour in ways which deviate from the true Vi way, but
-" which are considered to add usability. Which, if any, of these options to
-" use is very much a personal preference, but they are harmless.
 
 " Use case insensitive search, except when using capital letters
 set ignorecase
@@ -90,12 +83,9 @@ set visualbell
 " is unset, this does nothing.
 set t_vb=
 
-" Enable use of the mouse for all modes
-"set mouse=a
-
 " Set the command window height to 2 lines, to avoid many cases of having to
 " "press <Enter> to continue"
-set cmdheight=2
+"set cmdheight=2
 
 " Display line numbers on the left
 set number
@@ -108,9 +98,8 @@ set pastetoggle=<F11>
 
 
 "------------------------------------------------------------
-" Indentation options {{{1
+" Indentation options
 "
-" Indentation settings according to personal preference.
 
 set shiftwidth=4
 set softtabstop=4
@@ -118,9 +107,10 @@ set expandtab
 set smarttab
 
 
-
 "------------------------------------------------------------
-" Bundle Scripts
+" Neobundle
+"
+
 if has('vim_starting')
   set runtimepath+=~/.vim/bundle/neobundle.vim/
 endif
@@ -130,7 +120,6 @@ call neobundle#begin(expand('~/.vim/bundle'))
 " Let NeoBundle manage NeoBundle
 NeoBundleFetch 'Shougo/neobundle.vim'
 
-" Add or remove your Bundles here:
 NeoBundle 'Shougo/neomru.vim'
 NeoBundle 'Shougo/unite.vim'
 NeoBundle 'Shougo/vimproc.vim', {
@@ -148,7 +137,10 @@ NeoBundle 'Valloric/YouCompleteMe', {
             \     'unix' : './install.sh --clang-completer',
             \    },
             \ }
+
 NeoBundle 'airblade/vim-gitgutter'
+NeoBundle 'altercation/vim-colors-solarized'
+NeoBundle 'bling/vim-airline'
 NeoBundle 'kchmck/vim-coffee-script'
 NeoBundle 'klen/python-mode'
 NeoBundle 'michaeljsmith/vim-indent-object'
@@ -159,12 +151,12 @@ NeoBundle 'tpope/vim-abolish'
 NeoBundle 'tpope/vim-classpath'
 NeoBundle 'tpope/vim-commentary'
 NeoBundle 'tpope/vim-fugitive'
-NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'tpope/vim-repeat'
 NeoBundle 'tpope/vim-surround'
 NeoBundle 'vim-scripts/paredit.vim'
+NeoBundle 'yuku-t/unite-git'
 
-" Required:
+" Required
 call neobundle#end()
 
 " If there are uninstalled bundles found on startup,
@@ -175,7 +167,6 @@ NeoBundleCheck
 "------------------------------------------------------------
 " Mappings {{{1
 "
-" Useful mappings
 
 " Map Y to act like D and C, i.e. to yank until EOL, rather than act as yy,
 " which is the default
@@ -198,10 +189,7 @@ vmap <C-v> :r!xclip -o -sel clip<CR>
 " Allow saving of read only files
 cmap w!! w !sudo tee % > /dev/null
 
-" NERDTree toggling
-map <F2> :NERDTreeToggle<CR>
-
-" Escape using kk
+" Escape using kk (set timeout down so that typing two ks is still possible)
 inoremap kk <Esc>
 set timeoutlen=200
 
@@ -213,31 +201,79 @@ let mapleader = ","
 " Misc
 "
 
-
-" Use pathogen to manage plugins
-call pathogen#infect()
-Helptags
-
 colorscheme relaxedgreen
+"set background=dark
 hi ColorColumn ctermbg=DarkBlue
 
 :set guioptions-=m  "remove menu bar
 :set guioptions-=T  "remove toolbar
 :set guioptions-=r  "remove right-hand scroll bar
 
+" Strip trailing whitespace from python and clojure files
+autocmd FileType python,clojure,coffeescript autocmd BufWritePre <buffer> :%s/\s\+$//e
+
+
+"------------------------------------------------------------
+" Plugins
+"
+
+
+" Use pathogen to manage plugins
+call pathogen#infect()
+Helptags
+
+" NERDTree toggling
+map <F2> :NERDTreeToggle<CR>
+
+"------------------------------------------------------------
+" Clojure/paredit
+"
+
+" Rainbow paren highlighting
 let vimclojure#ParenRainbow = 1
 "let vimclojure#WantNailgun = 1
 
-" Unite.vim settings
-call unite#custom#source('file_rec', 'ignore_globs', ['/home/vagrant/.host'])
-call unite#custom#source('buffer,file,file_rec', 'sorters', 'sorter_selecta')
+let g:paredit_smartjump=1
+
+
+"------------------------------------------------------------
+" Unite.vim
+"
+
+" If working in VM, don't follow sshfs back to host
+call unite#custom#source('file_rec,file_rec/async', 'ignore_globs', ['/home/vagrant/.host'])
+
+" Use fuzzy matcher with selecta sort by default
 call unite#filters#matcher_default#use(['matcher_fuzzy'])
-let g:unite_source_rec_async_command= 'ag --follow --nocolor --nogroup --hidden -g ""'
+call unite#filters#sorter_default#use(['sorter_selecta'])
 
-nnoremap <C-p> :Unite -start-insert file_mru file_rec/async:!<cr>
+" Use silver searcher if available
+if executable('ag')
+    " Use ag to power file list
+    let g:unite_source_rec_async_command= 'ag --follow --nocolor --nogroup --hidden -g ""'
+
+    " Use ag in unite grep source
+    let g:unite_source_grep_command = 'ag'
+    let g:unite_source_grep_default_opts =
+    \ '--line-numbers --nocolor --nogroup --hidden --ignore ' .
+    \  '''.hg'' --ignore ''.svn'' --ignore ''.git'' --ignore ''.bzr'''
+    let g:unite_source_grep_recursive_opt = ''
+endif
+
+
+" Emulate ctrl-p fuzzy finder
+nnoremap <C-p> :Unite -start-insert file_rec/async:!<cr>
+
+" Show currently changed git files
+nnoremap <C-g> :Unite git_modified git_untracked<cr>
+
+" Grep using ?
 nnoremap ? :Unite grep:!<cr>
-nnoremap <C-n> :UniteWithCursorWord grep:!:-w<cr>
 
+" Grep for exact match under cursor (hyper-*)
+nnoremap <C-n> :UniteWithCursorWord grep:!::-w<cr>
+
+" Enable yank history
 let g:unite_source_history_yank_enable = 1
 nnoremap <leader>y :Unite history/yank<cr>
 
@@ -249,26 +285,54 @@ function! s:unite_settings()
   imap <buffer> <C-k>   <Plug>(unite_select_previous_line)
 endfunction
 
-" Strip trailing whitespace from python and clojure files
-autocmd FileType python,clojure,coffeescript autocmd BufWritePre <buffer> :%s/\s\+$//e
 
+"------------------------------------------------------------
 " Syntastic
+"
+
 " Disable for python if favour of pyflakes-vim
 let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['python'] }
 
-let g:paredit_smartjump=1
-
-" Pymode
-let g:pymode_folding = 0
-let g:pymode_lint_on_fly = 1
-let g:pymode_lint_cwindow = 0
-let g:pymode_syntax_space_errors = 0
 
 "------------------------------------------------------------
-" Allow work specific settings to override anything else
+" Pymode
 "
 
+" Disable folding
+let g:pymode_folding = 0
+
+" Check syntax as we type
+let g:pymode_lint_on_fly = 1
+
+" Don't pop up quickfix window automatically on lint errors
+let g:pymode_lint_cwindow = 0
+
+" Don't highlight incorrect spaces (annoying when starting new indent)
+let g:pymode_syntax_space_errors = 0
+
+
+"------------------------------------------------------------
+" gitgutter
+"
+
+" Jump between hunks
+nmap [h <Plug>GitGutterPrevHunk
+nmap ]h <Plug>GitGutterNextHunk
+
+
+"------------------------------------------------------------
+" vimrc config
+"
+
+" Allow work specific settings to override anything else
 let vimrc_work = expand("~/.vimrc_work")
 if filereadable(vimrc_work)
     exe "source " . vimrc_work
 endif
+
+
+" Autoreload vimrc
+augroup reload_vimrc " {
+    autocmd!
+    autocmd BufWritePost $MYVIMRC source $MYVIMRC
+augroup END " }
