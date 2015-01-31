@@ -50,6 +50,9 @@ function pyclear () { find . -iname '*.pyc' -delete; }
 # Git submodule update
 function gsu () { pushd $(git rev-parse --show-toplevel) > /dev/null; git submodule sync; git submodule update --init --recursive; popd > /dev/null; }
 
+# tmux colour correction
+alias tmx='TERM=xterm-256color tmx'
+
 ### Home specific ###
 if [ -f ~/.aliases_home ]; then
     . ~/.aliases_home
