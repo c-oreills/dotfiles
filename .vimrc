@@ -316,6 +316,9 @@ let g:pymode_lint_cwindow = 0
 " Don't highlight incorrect spaces (annoying when starting new indent)
 let g:pymode_syntax_space_errors = 0
 
+" Don't autocomplete on dot so that we don't clash with YouCompleteMe
+" (pymode completion doesn't do fuzzy filtering)
+let g:pymode_rope_complete_on_dot = 0
 
 "------------------------------------------------------------
 " gitgutter
