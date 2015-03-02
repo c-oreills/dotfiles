@@ -1,6 +1,6 @@
 #!/bin/bash
 
-sudo apt-get install tmux ack-grep tig zsh
+sudo apt-get install tmux ag tig zsh
 
 eval `ssh-agent`
 ssh-add
@@ -24,3 +24,5 @@ cd bundle/YouCompleteMe
 
 cd ~/.oh-my-zsh
 git checkout origin/master
+
+cd ~
