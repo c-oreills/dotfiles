@@ -186,6 +186,9 @@ imap <C-v> <Esc>"+pa
 "vmap <C-c> :w !xclip -f -sel clip<CR><CR>
 "vmap <C-v> :r!xclip -o -sel clip<CR>
 
+" Format json quickly
+nmap =j :%!python -m json.tool<CR>
+
 " Allow saving of read only files
 cmap w!! w !sudo tee % > /dev/null
 
