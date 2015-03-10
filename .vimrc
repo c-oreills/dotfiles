@@ -183,8 +183,8 @@ vmap <C-v> "+p
 imap <C-v> <Esc>"+pa
 
 " Uncomment for use with X11 forwarding
-vmap <C-c> :w !xclip -f -sel clip<CR><CR>
-vmap <C-v> :r!xclip -o -sel clip<CR>
+"vmap <C-c> :w !xclip -f -sel clip<CR><CR>
+"vmap <C-v> :r!xclip -o -sel clip<CR>
 
 " Allow saving of read only files
 cmap w!! w !sudo tee % > /dev/null
