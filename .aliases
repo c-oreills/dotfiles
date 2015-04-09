@@ -39,6 +39,7 @@ alias m='./manage.py'
 alias mt='./manage.py test'
 alias ms='./manage.py shell'
 
+# Git log pipe to tig
 function glt () { git log --format="format:commit %H %s" $* | tig; }
 
 # Port forwarding
