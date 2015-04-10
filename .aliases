@@ -55,6 +55,9 @@ function gsu () { pushd $(git rev-parse --show-toplevel) > /dev/null; git submod
 # tmux colour correction
 alias tmx='TERM=xterm-256color tmx'
 
+# terminal emacs
+alias emacs='emacs -nw'
+
 ### Home specific ###
 if [ -f ~/.aliases_home ]; then
     . ~/.aliases_home
