@@ -29,14 +29,5 @@
       (eldoc-mode))
     (add-hook 'emacs-lisp-mode-hook 'my-lisp-hook)))
 
-(use-package flycheck
-  :ensure t
-  :config
-  (progn
-    (defun my-flycheck-emacs-lisp-hook ()
-      (flycheck-mode)
-      (flycheck-disable-checker 'emacs-lisp-checkdoc))
-    (add-hook 'emacs-lisp-mode-hook 'my-flycheck-emacs-lisp-hook))
-  )
 
 (provide 'my-lisp-mode)
