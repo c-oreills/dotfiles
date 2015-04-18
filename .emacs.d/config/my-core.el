@@ -6,7 +6,8 @@
           '(progn ,@body)))
 
 ; Save backup files in .emacs.d/backups
-(setq backup-directory-alist `(("." . (concat user-emacs-directory "backups")))
+
+(setq backup-directory-alist `((".*" . ,(concat user-emacs-directory "backups")))
       backup-by-copying t
       version-control t)
 
