@@ -129,6 +129,10 @@ before layers configuration."
    ;; specified with an installed package.
    ;; Not used for now.
    dotspacemacs-default-package-repository nil
+   ;; Escape insert mode using kk and use a slightly longer timeout (default 0.1)
+   ;; Needs to be done before evil-escape-mode is enabled (hence in init)
+   evil-escape-key-sequence "kk"
+   evil-escape-delay 0.2
 )  )
 
 (defun dotspacemacs/config ()
@@ -137,9 +141,6 @@ before layers configuration."
 layers configuration."
   ;; User initialization goes here
   (setq
-   ;; Escape insert mode using kk and use a slightly longer timeout (default 0.1)
-   evil-escape-key-sequence "kk"
-   evil-escape-delay 0.2
    ;; Don't redisplay magit instructions
    magit-last-seen-setup-instructions "1.4.0")
   ;; Enable evil-lisp-state by default in elisp buffers
