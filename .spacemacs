@@ -144,7 +144,25 @@ layers configuration."
    ;; Don't redisplay magit instructions
    magit-last-seen-setup-instructions "1.4.0")
   ;; Enable evil-lisp-state by default in elisp buffers
-  (add-hook 'emacs-lisp-mode-hook 'evil-lisp-state))
+  (add-hook 'emacs-lisp-mode-hook 'evil-lisp-state)
+  ;; Display line numbers
+  (global-linum-mode)
+  (if (not (display-graphic-p))
+      (progn
+        ;; Don't highlight current line
+        (global-hl-line-mode -1)
+        ;; Disable separators in powerline
+        (setq powerline-default-separator nil)
+        ;; Solarized theme
+        (when nil
+          (paradox-require 'color-theme-solarized)
+          (load-theme 'solarized t)
+          (setq solarized-termcolors 256)
+          (set-terminal-parameter nil 'background-mode 'dark)
+          (set-frame-parameter nil 'background-mode 'dark)
+          (enable-theme 'solarized))
+        ))
+  )
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
