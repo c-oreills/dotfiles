@@ -142,7 +142,12 @@ layers configuration."
   ;; User initialization goes here
   (setq
    ;; Don't redisplay magit instructions
-   magit-last-seen-setup-instructions "1.4.0")
+   magit-last-seen-setup-instructions "1.4.0"
+   ;; Vim-style coarse undo
+   evil-want-fine-undo nil
+   ;; Insert symbol at point by default in helm-ag
+   helm-ag-insert-at-point 'symbol
+   )
   ;; Enable evil-lisp-state by default in elisp buffers
   (add-hook 'emacs-lisp-mode-hook 'evil-lisp-state)
   ;; Display line numbers
