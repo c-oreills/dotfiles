@@ -17,11 +17,14 @@
      ;; Uncomment a layer name and press C-c C-c to install it
      ;; --------------------------------------------------------
      auto-completion
+     clojure
      (git :variables
           git-gutter-use-fringe t)
+     emacs-lisp
      markdown
      org
      python
+     shell
      syntax-checking
      )
    ;; A list of packages and/or extensions that will not be install and loaded.
@@ -60,8 +63,6 @@ before layers configuration."
    ;; with 2 themes variants, one dark and one light)
    dotspacemacs-themes '(solarized-dark
                          solarized-light)
-   ;; If non nil the cursor color matches the state color.
-   dotspacemacs-colorize-cursor-according-to-state t
    ;; Default font. `powerline-scale' allows to quickly tweak the mode-line
    ;; size to make separators look not too crappy.
    dotspacemacs-default-font '("Inconsolata"
@@ -146,16 +147,20 @@ layers configuration."
    ;; Vim-style coarse undo
    evil-want-fine-undo nil
    ;; Insert symbol at point by default in helm-ag
-   helm-ag-insert-at-point 'symbol
-   )
+   helm-ag-insert-at-point 'symbol)
   ;; Enable evil-lisp-state by default in elisp buffers
   (add-hook 'emacs-lisp-mode-hook 'evil-lisp-state)
   ;; Display line numbers
   (global-linum-mode)
-  (if (not (display-graphic-p))
+  (if (display-graphic-p)
+      (progn
+        ;; Use solarized-dark in gui mode
+        (load-theme 'solarized-dark)
+        ;; If non nil the cursor color matches the state color.
+        dotspacemacs-colorize-cursor-according-to-state t)
       (progn
         ;; Don't highlight current line
-        (global-hl-line-mode -1)
+        (global-hl-line-mode -1))
         ;; Disable separators in powerline
         (setq powerline-default-separator nil)
         ;; Solarized theme
