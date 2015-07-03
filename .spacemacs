@@ -18,14 +18,17 @@
      ;; --------------------------------------------------------
      auto-completion
      clojure
-     (git :variables
-          git-gutter-use-fringe t)
      emacs-lisp
+     eyebrowse
+     git
+     javascript
      markdown
      org
      python
      shell
      syntax-checking
+     version-control
+     xclip
      )
    ;; A list of packages and/or extensions that will not be install and loaded.
    dotspacemacs-excluded-packages '()
@@ -134,8 +137,7 @@ before layers configuration."
    ;; Escape insert mode using kk and use a slightly longer timeout (default 0.1)
    ;; Needs to be done before evil-escape-mode is enabled (hence in init)
    evil-escape-key-sequence "kk"
-   evil-escape-delay 0.2
-)  )
+   evil-escape-delay 0.2))
 
 (defun dotspacemacs/config ()
   "Configuration function.
@@ -153,6 +155,8 @@ layers configuration."
   (add-hook 'emacs-lisp-mode-hook 'evil-lisp-state)
   ;; Display line numbers
   (global-linum-mode)
+  ;; vim-like tab behaviour for eyebrowse
+  (eyebrowse-setup-evil-keys)
   (if (display-graphic-p)
       (progn
         ;; Use solarized-dark in gui mode
@@ -171,9 +175,7 @@ layers configuration."
           (setq solarized-termcolors 256)
           (set-terminal-parameter nil 'background-mode 'dark)
           (set-frame-parameter nil 'background-mode 'dark)
-          (enable-theme 'solarized))
-        ))
-  )
+          (enable-theme 'solarized))))
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
