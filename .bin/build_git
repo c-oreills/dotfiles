@@ -1,0 +1,19 @@
+#!/bin/bash
+
+GIT_VER=2.5.0
+
+sudo apt-get install libcurl4-gnutls-dev libexpat1-dev gettext libz-dev libssl-dev
+sudo apt-get install asciidoc xmlto docbook2x
+
+TMPDIR=`mktemp -d`
+cd $TMPDIR
+
+wget https://www.kernel.org/pub/software/scm/git/git-$GIT_VER.tar.gz
+tar -xf git-$GIT_VER.tar.gz
+cd git-$GIT_VER
+make configure
+./configure --prefix=/usr
+make all doc info
+sudo make install install-doc install-html install-info
+
+rm -rf $TMPDIR

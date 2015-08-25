@@ -1,0 +1,16 @@
+#!/bin/bash
+
+sudo apt-get build-dep tmux
+
+TMUX_VER=2.0
+
+TMPDIR=`mktemp -d`
+cd $TMPDIR
+
+wget https://github.com/tmux/tmux/releases/download/$TMUX_VER/tmux-$TMUX_VER.tar.gz
+tar -xf tmux-$TMUX_VER.tar.gz
+cd tmux-$TMUX_VER
+./configure && make
+sudo make install
+
+rm -rf $TMPDIR
