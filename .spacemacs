@@ -160,6 +160,8 @@ layers configuration."
   (global-linum-mode)
   ;; vim-like tab behaviour for eyebrowse
   (eyebrowse-setup-evil-keys)
+  ;; Don't use bright yellow search highlights
+  (set-face-background 'evil-search-highlight-persist-highlight-face "grey39")
   (if (display-graphic-p)
       (progn
         ;; Use solarized-dark in gui mode
