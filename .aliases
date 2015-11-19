@@ -52,6 +52,12 @@ function pyclear () { find . -iname '*.pyc' -delete; }
 # Git submodule update
 function gsu () { pushd $(git rev-parse --show-toplevel) > /dev/null; git submodule sync; git submodule update --init --recursive; popd > /dev/null; }
 
+# Get git repo name
+function grepo () { basename $(git rev-parse --show-toplevel); }
+
+# workon this git repo's virtualenv (or make it if it doesn't exist)
+function wo () { workon $(grepo) || mkvirtualenv $(grepo); }
+
 # tmux colour correction
 alias tmx='TERM=xterm-256color tmx'
 
