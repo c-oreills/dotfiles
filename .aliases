@@ -58,6 +58,23 @@ function grepo () { basename $(git rev-parse --show-toplevel); }
 # workon this git repo's virtualenv (or make it if it doesn't exist)
 function wo () { workon $(grepo) || mkvirtualenv $(grepo); }
 
+# Menu of recent branches or remotes, sorted by commit time, for easy selection
+function gcr () {
+    if (( $# == 0 )); then
+        refpattern=refs/heads/
+    else
+        refpattern="refs/remotes/$1/"
+    fi
+    branches=("${(@f)$(git for-each-ref --sort=-committerdate --format '%(refname:short)~~(%(committerdate:relative))~~%(subject)' --count=9 $refpattern | column -ts'~~'
+    )}")
+    select branch in $branches; do
+        if [ x"$branch" != x"" ]; then
+            echo $branch | awk '{print $1}' | xargs git checkout
+            return
+        fi
+    done
+}
+
 # tmux colour correction
 alias tmx='TERM=xterm-256color tmx'
 
