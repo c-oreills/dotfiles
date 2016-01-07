@@ -150,7 +150,14 @@ layers configuration."
    ;; Vim-style coarse undo
    evil-want-fine-undo nil
    ;; Insert symbol at point by default in helm-ag
-   helm-ag-insert-at-point 'symbol)
+   helm-ag-insert-at-point 'symbol
+   ;; Server setup
+   server-host "localhost"
+   server-port 33465
+   server-use-tcp t
+   ;; flycheck tempfiles shouldn't be picked up by watcher tools
+   flycheck-temp-prefix ".flycheck"
+   )
   ;; Enable evil-lisp-state by default in elisp buffers
   (add-hook 'emacs-lisp-mode-hook 'evil-lisp-state)
   ;; Treat _ as a word char in python mode
