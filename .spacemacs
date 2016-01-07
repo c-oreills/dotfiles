@@ -169,6 +169,17 @@ layers configuration."
   (eyebrowse-setup-evil-keys)
   ;; Don't use bright yellow search highlights
   (set-face-background 'evil-search-highlight-persist-highlight-face "grey39")
+  ;; Insert mode slurp/barf
+  (define-key evil-insert-state-map (kbd "C-s") 'sp-forward-slurp-sexp)
+  (define-key evil-insert-state-map (kbd "C-b") 'sp-forward-barf-sexp)
+  ;; Space-w-f - close other windows, vsplit this window and focus
+  (defun maxi-vsplit-and-focus ()
+    (interactive)
+    (delete-other-windows)
+    (split-window-right-and-focus))
+  (evil-leader/set-key
+    "wf" 'maxi-vsplit-and-focus)
+
   (if (display-graphic-p)
       (progn
         ;; Use solarized-dark in gui mode
