@@ -162,7 +162,7 @@ layers configuration."
   (add-hook 'emacs-lisp-mode-hook 'evil-lisp-state)
   ;; Treat _ as a word char in python mode
   (add-hook 'python-mode-hook
-             (lambda () (modify-syntax-entry ?_ "w")))
+            (lambda () (modify-syntax-entry ?_ "w")))
   ;; Display line numbers
   (global-linum-mode)
   ;; vim-like tab behaviour for eyebrowse
