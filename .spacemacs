@@ -157,7 +157,8 @@ layers configuration."
    server-use-tcp t
    ;; flycheck tempfiles shouldn't be picked up by watcher tools
    flycheck-temp-prefix ".flycheck"
-   )
+   ;; Fancy clojure symbols
+   clojure-enable-fancify-symbols t)
   ;; Enable evil-lisp-state by default in elisp buffers
   (add-hook 'emacs-lisp-mode-hook 'evil-lisp-state)
   ;; Treat _ as a word char in python mode
