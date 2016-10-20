@@ -12,19 +12,18 @@
    ;; of a list then all discovered layers will be installed.
    dotspacemacs-configuration-layers
    '(
-     ;; --------------------------------------------------------
-     ;; Example of useful layers you may want to use right away
-     ;; Uncomment a layer name and press C-c C-c to install it
-     ;; --------------------------------------------------------
      auto-completion
      clojure
+     csv
      emacs-lisp
      eyebrowse
      git
+     html
      javascript
      markdown
      org
      python
+     restclient
      shell
      syntax-checking
      version-control
