@@ -33,7 +33,14 @@ plugins=(git python command-not-found pip ssh-agent vi-mode rvm)
 
 source $ZSH/oh-my-zsh.sh
 
-PROMPT='%{$fg_bold[red]%}âžœ %{$fg_no_bold[green]%}%m%{$fg_bold[blue]%}:%{$fg[cyan]%}%c %{$fg_bold[blue]%}$(git_prompt_info)%{$fg_bold[blue]%} % %{$reset_color%}'
+case "$TERM" in
+"dumb")
+    PROMPT='> '
+    ;;
+*)
+    PROMPT='%{$fg_bold[red]%}œ %{$fg_no_bold[green]%}%m%{$fg_bold[blue]%}:%{$fg[cyan]%}%c %{$fg_bold[blue]%}$(git_prompt_info)%{$fg_bold[blue]%} % %{$reset_color%}'
+    ;;
+esac
 ZSH_THEME_GIT_PROMPT_PREFIX="(%{$fg[red]%}"
 
 if [ -f ~/.aliases ]; then
