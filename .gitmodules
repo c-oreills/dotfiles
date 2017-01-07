@@ -1,6 +1,6 @@
 [submodule ".tmux/tmux-extra"]
 	path = .tmux/tmux-extra
-	url = git@github.com:c-oreills/tmux-extra.git
+	url = git://github.com/c-oreills/tmux-extra.git
 [submodule ".stderred"]
 	path = .stderred
 	url = git://github.com/sickill/stderred.git
@@ -12,7 +12,7 @@
 	url = git://github.com/robbyrussell/oh-my-zsh.git
 [submodule ".vim/bundle/neobundle.vim"]
 	path = .vim/bundle/neobundle.vim
-	url = git@github.com:Shougo/neobundle.vim.git
+	url = git://github.com/Shougo/neobundle.vim.git
 [submodule ".emacs.d"]
 	path = .emacs.d
 	url = http://github.com/syl20bnr/spacemacs
