@@ -12,11 +12,11 @@
    ;; of a list then all discovered layers will be installed.
    dotspacemacs-configuration-layers
    '(
+     yaml
      auto-completion
      clojure
      csv
      emacs-lisp
-     eyebrowse
      git
      html
      javascript
@@ -27,7 +27,6 @@
      shell
      syntax-checking
      version-control
-     xclip
      )
    ;; A list of packages and/or extensions that will not be install and loaded.
    dotspacemacs-excluded-packages '()
@@ -69,7 +68,7 @@ before layers configuration."
    ;; Default font. `powerline-scale' allows to quickly tweak the mode-line
    ;; size to make separators look not too crappy.
    dotspacemacs-default-font '("Inconsolata"
-                               :size 15
+                               :size 16
                                :weight normal
                                :width normal
                                ;;:spacing "monospace"
