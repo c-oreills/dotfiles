@@ -84,6 +84,8 @@ alias emacs='TERM=xterm-256color emacs -nw'
 
 # blog image resizing
 function blogimg () { convert $1 -resize 740 $1 }
+# blog staging push
+alias blogstage='git push staging `git rev-parse --abbrev-ref HEAD`:master'
 
 ### Home specific ###
 if [ -f ~/.aliases_home ]; then
