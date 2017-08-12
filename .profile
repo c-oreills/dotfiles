@@ -21,6 +21,11 @@ if [ -d "$HOME/.bin" ] ; then
     PATH="$HOME/.bin:$PATH"
 fi
 
+# include home settings if home file exists
+if [ -f "$HOME/.profile_home" ]; then
+    . "$HOME/.profile_home"
+fi
+
 # include work settings if work file exists
 if [ -f "$HOME/.profile_work" ]; then
     . "$HOME/.profile_work"
