@@ -45,5 +45,6 @@ fi
 source `which virtualenvwrapper_lazy.sh`
 
 PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
+PATH=./node_modules/.bin:$PATH # Preferentially use local node binaries
 
 export ERL_AFLAGS="-kernel shell_history enabled"
