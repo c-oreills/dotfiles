@@ -31,6 +31,7 @@ values."
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
    '(
+     ruby
      yaml
      auto-completion
      clojure
@@ -370,3 +371,17 @@ you should place your code here."
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   (quote
+    (powerline org-category-capture inflections dash-functional tern iedit skewer-mode simple-httpd winum restclient-helm ob-restclient fuzzy company-restclient know-your-http-well org paredit seq packed hydra f s rvm ruby-tools ruby-test-mode rubocop rspec-mode robe rbenv rake minitest chruby bundler inf-ruby yaml-mode which-key web-mode use-package spacemacs-theme shell-pop restart-emacs pyvenv persp-mode org-plus-contrib org-download ob-http neotree move-text mmm-mode markdown-toc live-py-mode info+ indent-guide hide-comnt help-fns+ helm-make helm-gitignore helm-company helm-ag git-timemachine git-link expand-region exec-path-from-shell evil-nerd-commenter evil-mc evil-ediff company-statistics aggressive-indent ace-window cider clojure-mode anaconda-mode company smartparens highlight evil flycheck helm helm-core yasnippet multiple-cursors avy alert projectile magit magit-popup git-commit async haml-mode js2-mode dash yapfify xterm-color ws-butler with-editor window-numbering web-beautify volatile-highlights vi-tilde-fringe uuidgen undo-tree toc-org tagedit spaceline smeargle slim-mode scss-mode sass-mode restclient request rainbow-delimiters queue quelpa pytest pyenv-mode py-isort pug-mode popwin pkg-info pip-requirements pcre2el paradox orgit org-projectile org-present org-pomodoro org-bullets open-junk-file multi-term markdown-mode magit-gitflow macrostep lorem-ipsum log4e livid-mode linum-relative link-hint less-css-mode json-mode js2-refactor js-doc ido-vertical-mode hy-mode hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-themes helm-swoop helm-pydoc helm-projectile helm-mode-manager helm-flx helm-descbinds helm-css-scss helm-c-yasnippet goto-chg google-translate golden-ratio gnuplot gntp gitignore-mode gitconfig-mode gitattributes-mode git-messenger git-gutter-fringe git-gutter-fringe+ gh-md flycheck-pos-tip flx-ido fill-column-indicator fancy-battery eyebrowse evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-matchit evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-args evil-anzu eshell-z eshell-prompt-extras esh-help emmet-mode elisp-slime-nav dumb-jump diminish diff-hl define-word cython-mode csv-mode company-web company-tern company-anaconda column-enforce-mode coffee-mode clojure-snippets clj-refactor clean-aindent-mode cider-eval-sexp-fu bind-key auto-yasnippet auto-highlight-symbol auto-compile adaptive-wrap ace-link ace-jump-helm-line ac-ispell))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
