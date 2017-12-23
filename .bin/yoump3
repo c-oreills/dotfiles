@@ -8,6 +8,6 @@ song_name = '+'.join(urllib.quote(a) for a in sys.argv[1:])
 query = 'https://www.youtube.com/results?search_query=' + song_name
 data = urllib.urlopen(query).read()
 #print data
-match = re.search('/watch\?v=\w+', data)
+match = re.search('/watch\?v=[\w-]+', data)
 video_url = 'https://www.youtube.com' + match.group(0)
 subprocess.call(('youtube2mp3', '-d', '~/Music', '-y', video_url))
