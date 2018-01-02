@@ -318,10 +318,6 @@ you should place your code here."
    evil-want-fine-undo nil
    ;; Insert symbol at point by default in helm-ag
    helm-ag-insert-at-point 'symbol
-   ;; Server setup
-   server-host "localhost"
-   server-port 33465
-   server-use-tcp t
    ;; flycheck tempfiles shouldn't be picked up by watcher tools
    flycheck-temp-prefix ".flycheck"
    ;; Fancy clojure symbols
