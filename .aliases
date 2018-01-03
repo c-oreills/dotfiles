@@ -16,6 +16,8 @@ alias ga='git add'
 alias gap='git add -p'
 alias gp='git push'
 alias gpo='git push origin -u `git rev-parse --abbrev-ref HEAD`'
+alias gpu='git push upstream -u `git rev-parse --abbrev-ref HEAD`'
+alias gpc='git push christy -u `git rev-parse --abbrev-ref HEAD`'
 alias gl='git log'
 alias gs='git status'
 alias gst='git stash'
@@ -30,15 +32,23 @@ alias gc='git checkout'
 alias gcl='git clone'
 alias gf='git fetch'
 alias gfo='git fetch origin'
+alias gfu='git fetch upstream'
 alias gr='git merge'
 alias grf='git merge --ff-only'
 alias gri='git rebase -i'
 alias gcp='git cherry-pick'
 
+# Hub alias
+alias hpr='hub pull-request'
+
 # Django
 alias m='./manage.py'
 alias mt='./manage.py test'
 alias ms='./manage.py shell'
+
+# Zephzone
+alias zz='/home/christy/.virtualenvs/zephzone/bin/python /home/christy/projects/zephzone/__init__.py'
+alias zzz='/home/christy/.virtualenvs/zephzone/bin/python /home/christy/projects/zephzone/__init__.py --no-brain-fm'
 
 # Git log pipe to tig
 function glt () { git log --format="format:commit %H %s" $* | tig; }
