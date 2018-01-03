@@ -54,6 +54,7 @@ values."
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
    dotspacemacs-additional-packages '(
+                                      color-theme-solarized
                                       keychain-environment
                                       )
    ;; A list of packages that cannot be updated.
