@@ -357,7 +357,7 @@ you should place your code here."
   (if (display-graphic-p)
       (progn
         ;; Use solarized-dark in gui mode
-        (load-theme 'solarized-dark)
+        (load-theme 'solarized)
         ;; If non nil the cursor color matches the state color.
         dotspacemacs-colorize-cursor-according-to-state t)
       (progn
