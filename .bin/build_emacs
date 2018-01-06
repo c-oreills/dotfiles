@@ -1,6 +1,6 @@
 #!/bin/bash
 
-EMACS_VER=25.1
+EMACS_VER=25.3
 
 sudo apt-get install build-essential
 sudo apt-get build-dep emacs24
