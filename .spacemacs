@@ -40,6 +40,7 @@ values."
      emacs-lisp
      git
      html
+     ipython-notebook
      javascript
      markdown
      org
