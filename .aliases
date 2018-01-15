@@ -86,6 +86,9 @@ function gcr () {
     done
 }
 
+# Free up space on /boot by cleaning up old kernels
+function bootpurge () { sudo apt-get purge $(dpkg -l linux-{image,headers}-"[0-9]*" | awk '/ii/{print $2}' | grep -ve "$(uname -r | sed -r 's/-[a-z]+//')") }
+
 # tmux colour correction
 alias tmx='TERM=xterm-256color tmx'
 
