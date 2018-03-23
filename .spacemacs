@@ -348,8 +348,15 @@ you should place your code here."
     (interactive)
     (delete-other-windows)
     (split-window-right-and-focus))
+  ;; Search for this exact word with boundaries, for easier definition finding
+  (defun helm-ag-exact-word ()
+    (interactive)
+    (let ((helm-ag-command-option "-w"))
+      (spacemacs/helm-project-smart-do-search-region-or-symbol)))
   (evil-leader/set-key
-    "wf" 'maxi-vsplit-and-focus)
+    "wf" 'maxi-vsplit-and-focus
+    "\\" 'helm-swoop-symble-pre-input
+    "?" 'helm-ag-exact-word)
 
   (if (display-graphic-p)
       (progn
