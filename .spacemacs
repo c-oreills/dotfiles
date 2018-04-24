@@ -263,7 +263,7 @@ values."
    ;;                       text-mode
    ;;   :size-limit-kb 1000)
    ;; (default nil)
-   dotspacemacs-line-numbers nil
+   dotspacemacs-line-numbers t
    ;; Code folding method. Possible values are `evil' and `origami'.
    ;; (default 'evil)
    dotspacemacs-folding-method 'evil
@@ -333,8 +333,6 @@ you should place your code here."
   ;; Treat _ as a word char in python mode
   (add-hook 'python-mode-hook
             (lambda () (modify-syntax-entry ?_ "w")))
-  ;; Display line numbers
-  (global-linum-mode)
   ;; vim-like tab behaviour for eyebrowse
   (eyebrowse-setup-evil-keys)
   ;; Don't use bright yellow search highlights
