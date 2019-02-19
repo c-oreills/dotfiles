@@ -103,6 +103,9 @@ alias blogstage='git push staging `git rev-parse --abbrev-ref HEAD`:master'
 # Inevitably I will get to the point where I wish I hadn't started using curl
 alias curl='echo "Just use Python before this gets out of hand and you regret it\n--------------------------------------------------------------"; curl'
 
+# Dropbox multiple accounts workaround
+alias dropalt='HOME="$HOME/.dropbox-alt" && /usr/bin/dropbox start -i'
+
 ### Home specific ###
 if [ -f ~/.aliases_home ]; then
     . ~/.aliases_home
