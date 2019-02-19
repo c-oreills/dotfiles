@@ -32,7 +32,6 @@ values."
    dotspacemacs-configuration-layers
    '(
      php
-     elixir
      ruby
      yaml
      auto-completion
