@@ -59,6 +59,7 @@ values."
    dotspacemacs-additional-packages '(
                                       color-theme-solarized
                                       keychain-environment
+                                      ng2-mode
                                       )
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
@@ -334,6 +335,8 @@ you should place your code here."
   ;; Treat _ as a word char in python mode
   (add-hook 'python-mode-hook
             (lambda () (modify-syntax-entry ?_ "w")))
+  ;; Treat .tpl files as Angular2 templates
+  (add-to-list 'auto-mode-alist '("\\.tpl\\'" . ng2-html-mode))
   ;; vim-like tab behaviour for eyebrowse
   (eyebrowse-setup-evil-keys)
   ;; Don't use bright yellow search highlights
