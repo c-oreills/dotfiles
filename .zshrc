@@ -41,10 +41,10 @@ case "$TERM" in
     PROMPT='> '
     ;;
 *)
-    PROMPT='%{$fg_bold[red]%}œ %{$fg_no_bold[green]%}%m%{$fg_bold[blue]%}:%{$fg[cyan]%}%c %{$fg_bold[blue]%}$(git_prompt_info)%{$fg_bold[blue]%} % %{$reset_color%}'
+    PROMPT='${ret_status} %{$fg_no_bold[green]%}%m%{$fg_bold[blue]%}:%{$fg[cyan]%}%c%{$reset_color%} $(git_prompt_info)'
     ;;
 esac
-ZSH_THEME_GIT_PROMPT_PREFIX="(%{$fg[red]%}"
+ZSH_THEME_GIT_PROMPT_PREFIX="%{$fg[blue]%}(%{$fg[red]%}"
 
 if [ -f ~/.aliases ]; then
     . ~/.aliases
