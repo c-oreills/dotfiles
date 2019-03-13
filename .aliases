@@ -81,6 +81,8 @@ function gcr () {
     done
 }
 
+alias gcro="gcr origin"
+
 # Show the branch name of HEAD on any remotes - e.g. if I've got a floating head from "origin/master" outputs "master"
 function gbn () { git show-ref | grep `git rev-parse HEAD` | awk '{print $2}' | sed 's/refs.remotes.[^\/]*\///' }
 
