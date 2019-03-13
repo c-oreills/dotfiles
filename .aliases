@@ -81,6 +81,12 @@ function gcr () {
     done
 }
 
+# Show the branch name of HEAD on any remotes - e.g. if I've got a floating head from "origin/master" outputs "master"
+function gbn () { git show-ref | grep `git rev-parse HEAD` | awk '{print $2}' | sed 's/refs.remotes.[^\/]*\///' }
+
+# Checks out a local branch to follow a remote branch
+function gcbn () { git checkout -b `gbn` }
+
 # Free up space on /boot by cleaning up old kernels
 function bootpurge () { sudo apt-get purge $(dpkg -l linux-{image,headers}-"[0-9]*" | awk '/ii/{print $2}' | grep -ve "$(uname -r | sed -r 's/-[a-z]+//')") }
 
