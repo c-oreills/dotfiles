@@ -61,6 +61,9 @@ function gsu () { pushd $(git rev-parse --show-toplevel) > /dev/null; git submod
 # Get git repo name
 function grepo () { basename $(git rev-parse --show-toplevel); }
 
+# Go to root directory of git repo
+function gdr () { cd $(git rev-parse --show-toplevel)/$1; }
+
 # workon this git repo's virtualenv (or make it if it doesn't exist)
 function wo () { workon $(grepo) || mkvirtualenv $(grepo); }
 
