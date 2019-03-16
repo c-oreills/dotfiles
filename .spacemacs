@@ -58,6 +58,7 @@ values."
    ;; configuration in `dotspacemacs/user-config'.
    dotspacemacs-additional-packages '(
                                       color-theme-solarized
+                                      impatient-mode
                                       keychain-environment
                                       ng2-mode
                                       )
