@@ -359,6 +359,8 @@ you should place your code here."
       (spacemacs/helm-project-smart-do-search-region-or-symbol)))
   (evil-leader/set-key
     "wf" 'maxi-vsplit-and-focus
+    "gn" 'git-gutter+-next-hunk
+    "gp" 'git-gutter+-previous-hunk
     "\\" 'helm-swoop-symble-pre-input
     "?" 'helm-ag-exact-word)
 
