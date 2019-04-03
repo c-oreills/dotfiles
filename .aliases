@@ -83,7 +83,7 @@ function gcr () {
     else
         refpattern="refs/remotes/$1/"
     fi
-    branches=("${(@f)$(git for-each-ref --sort=-committerdate --format '%(refname:short)~~(%(committerdate:relative))~~%(subject)' --count=9 $refpattern | column -ts'~~'
+    branches=("${(@f)$(git for-each-ref --sort=-committerdate --format '%(refname:short)~~(%(committername)~~%(committerdate:relative))~~%(subject)' --count=9 $refpattern | column -ts'~~'
     )}")
     select branch in $branches; do
         if [ x"$branch" != x"" ]; then
