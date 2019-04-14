@@ -47,6 +47,7 @@ values."
      markdown
      org
      python
+     react
      restclient
      shell
      syntax-checking
