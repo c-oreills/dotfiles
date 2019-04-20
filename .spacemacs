@@ -40,6 +40,7 @@ values."
      auto-completion
      clojure
      csv
+     django
      emacs-lisp
      git
      html
