@@ -332,7 +332,11 @@ you should place your code here."
    tramp-terminal-type "dumb"
    ;; 2 char javascript and JSON indents
    js2-basic-offset 2
-   js-indent-level 2)
+   js-indent-level 2
+   ;; Test for goto definition sad from https://github.com/syl20bnr/spacemacs/issues/9756
+   spacemacs-default-jump-handlers
+   (remove 'evil-goto-definition spacemacs-default-jump-handlers))
+
   ;; Enable evil-lisp-state by default in elisp buffers
   (add-hook 'emacs-lisp-mode-hook 'evil-lisp-state)
   ;; Treat _ as a word char in python mode
