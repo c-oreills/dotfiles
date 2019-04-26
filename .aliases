@@ -103,6 +103,33 @@ function gbn () { git show-ref | grep `git rev-parse HEAD` | grep -v 'heads/' | 
 # Checks out a local branch to follow a remote branch
 function gcbn () { git checkout -b `gbn` || git checkout `gbn` && git merge --ff-only }
 
+# Github release start
+function hrl() {
+    DATEPART=`date +%Y%m%d`;
+    NAME="$DATEPART$1"
+    BRANCHNAME=release/$NAME;
+    git fetch origin &&
+    git checkout staging &&
+    git merge --ff-only &&
+    git flow release start $NAME &&
+    git flow release publish
+}
+
+# Github release finish
+function hrlf() {
+    RELEASE=`git rev-parse --abbrev-ref HEAD`;
+    TAG=`echo $RELEASE | sed 's/release\///'`;
+    git fetch origin &&
+    git checkout master &&
+    git merge --ff-only &&
+    git checkout staging &&
+    git merge --ff-only &&
+    git checkout $RELEASE &&
+    git merge --ff-only &&
+    git flow release finish -m $TAG &&
+    git push;
+}
+
 # Free up space on /boot by cleaning up old kernels
 function bootpurge () { sudo apt-get purge $(dpkg -l linux-{image,headers}-"[0-9]*" | awk '/ii/{print $2}' | grep -ve "$(uname -r | sed -r 's/-[a-z]+//')") }
 
