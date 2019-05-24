@@ -3,13 +3,14 @@ libgtk2.0-dev libatk1.0-dev libbonoboui2-dev \
 libcairo2-dev libx11-dev libxpm-dev libxt-dev python-dev ruby-dev mercurial &&
 
 cd ~/.vim &&
-git clone https://github.com/vim/vim/ &&
+rm -rf vim &&
+git clone https://github.com/vim/vim/ --depth 1 &&
 cd vim &&
 ./configure --with-features=huge \
             --enable-pythoninterp \
             --enable-perlinterp \
             --enable-gui=gtk2 --enable-cscope --prefix=/usr &&
-make VIMRUNTIMEDIR=/usr/share/vim/vim73 &&
+make VIMRUNTIMEDIR=/usr/share/vim/vim81 &&
 sudo make install &&
 
 sudo update-alternatives --install /usr/bin/editor editor /usr/bin/vim 1 &&
