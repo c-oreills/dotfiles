@@ -31,9 +31,6 @@ if [ -f "$HOME/.profile_work" ]; then
     . "$HOME/.profile_work"
 fi
 
-# Load RVM into a shell session.
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
-
 RUBYOPT=rubygems
 export CLOJURE_EXT=$HOME/.clojure
 export CLOJURESCRIPT_HOME=$HOME/.clojurescript
@@ -44,7 +41,11 @@ fi
 
 source `which virtualenvwrapper_lazy.sh`
 
-PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 PATH=./node_modules/.bin:$PATH # Preferentially use local node binaries
 
 export ERL_AFLAGS="-kernel shell_history enabled"
+
+# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
+export PATH="$PATH:$HOME/.rvm/bin"
+
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*

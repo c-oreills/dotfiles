@@ -59,4 +59,5 @@ bindkey "e[1~" beginning-of-line # Home
 bindkey "e[4~" end-of-line # End
 bindkey "e[3~" delete-char # Del
 
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
+# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
+export PATH="$PATH:$HOME/.rvm/bin"
