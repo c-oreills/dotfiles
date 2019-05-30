@@ -34,6 +34,7 @@ alias gfu='git fetch upstream'
 alias gr='git merge'
 alias grf='git merge --ff-only'
 alias gri='git rebase -i'
+alias gru='git rebase -i @{u}'
 alias gcp='git cherry-pick'
 
 # Hub alias
@@ -112,7 +113,8 @@ function hrl() {
     git checkout staging &&
     git merge --ff-only &&
     git flow release start $NAME &&
-    git flow release publish
+    git flow release publish &&
+    echo "https://github.com/HousekeepLtd/housekeep/compare/master...release/$NAME?expand=1"
 }
 
 # Github release finish
