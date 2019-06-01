@@ -45,6 +45,9 @@ PATH=./node_modules/.bin:$PATH # Preferentially use local node binaries
 
 export ERL_AFLAGS="-kernel shell_history enabled"
 
+# Colour stderr red by preloading stderred
+export LD_PRELOAD="$HOME/.libstderred.so${LD_PRELOAD:+:$LD_PRELOAD}"
+
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 export PATH="$PATH:$HOME/.rvm/bin"
 
