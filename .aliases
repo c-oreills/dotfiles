@@ -158,6 +158,12 @@ function wlangw { route | grep wlan0 | grep default | sed 's/\s\+/\t/g' | cut -f
 # Docker container IP
 alias dockerip="docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}'"
 
+# pip install and save to requirements
+function pip-install-save {
+    REQSFILE="${2:-requirements.txt}"
+    pip install $1 && pip freeze | grep "^$1=" >> $REQSFILE && sort $REQSFILE -o $REQSFILE;
+}
+
 ### Home specific ###
 if [ -f ~/.aliases_home ]; then
     . ~/.aliases_home
