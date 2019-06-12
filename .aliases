@@ -36,6 +36,7 @@ alias grf='git merge --ff-only'
 alias gri='git rebase -i'
 alias gru='git rebase -i @{u}'
 alias gcp='git cherry-pick'
+alias -g gup='@{u}'
 
 # Hub alias
 alias hpr='hub pull-request'
