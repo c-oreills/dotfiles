@@ -35,6 +35,8 @@ alias gr='git merge'
 alias grf='git merge --ff-only'
 alias gri='git rebase -i'
 alias gru='git rebase -i @{u}'
+alias grhh='git reset --hard HEAD'
+alias grhu='git reset --hard @{u}'
 alias gcp='git cherry-pick'
 alias -g gup='@{u}'
 
