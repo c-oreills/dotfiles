@@ -59,5 +59,8 @@ bindkey "e[1~" beginning-of-line # Home
 bindkey "e[4~" end-of-line # End
 bindkey "e[3~" delete-char # Del
 
+# Sort completion by modification date
+zstyle ':completion:*' file-sort modification
+
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 export PATH="$PATH:$HOME/.rvm/bin"
