@@ -521,8 +521,6 @@ before packages are loaded."
   (add-to-list 'auto-mode-alist '("\\.tpl\\'" . ng2-html-mode))
   ;; vim-like tab behaviour for eyebrowse
   (eyebrowse-setup-evil-keys)
-  ;; Don't use bright yellow search highlights
-  (set-face-background 'evil-search-highlight-persist-highlight-face "grey39")
   ;; Integrate with system ssh agent
   (keychain-refresh-environment)
   ;; Insert mode slurp/barf
