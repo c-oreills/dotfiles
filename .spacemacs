@@ -47,7 +47,12 @@ This function should only modify configuration layer settings."
      git
      html
      ipython-notebook
-     javascript
+     (javascript :variables
+                 javascript-backend 'lsp
+                 javascript-fmt-tool 'prettier
+                 node-add-modules-path t
+                 )
+     lsp
      markdown
      org
      python
