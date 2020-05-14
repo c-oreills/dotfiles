@@ -131,12 +131,6 @@ NeoBundle 'Shougo/vimproc.vim', {
     \     'unix' : 'gmake',
     \    },
     \ }
-NeoBundle 'Valloric/YouCompleteMe', {
-            \ 'build' : {
-            \     'linux' : './install.sh --clang-completer',
-            \     'unix' : './install.sh --clang-completer',
-            \    },
-            \ }
 
 NeoBundle 'airblade/vim-gitgutter'
 NeoBundle 'altercation/vim-colors-solarized'
