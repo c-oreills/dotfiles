@@ -1,0 +1,36 @@
+#!/usr/bin/python
+
+from subprocess import check_output
+
+packages = """
+Bootstrap_4
+Clojure
+CSS
+Django
+Docker
+Emacs_Lisp
+Express
+Flask
+Font_Awesome
+HTML
+JavaScript
+Jinja
+Nginx
+NodeJS
+NumPy
+Pandas
+PostgreSQL
+Python_2
+Python_3
+React
+Redis
+SciPy
+SQLAlchemy
+SQLite
+TypeScript
+""".strip().split()
+
+check_output(
+    ['dasht-docsets-install', '-f'] +
+    ['^{p}$'.format(p=p) for p in packages]
+)
