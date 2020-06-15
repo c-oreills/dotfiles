@@ -42,6 +42,7 @@ This function should only modify configuration layer settings."
      auto-completion
      clojure
      csv
+     dash
      django
      emacs-lisp
      git
