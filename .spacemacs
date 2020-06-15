@@ -534,6 +534,16 @@ before packages are loaded."
   ;; Insert mode slurp/barf
   (define-key evil-insert-state-map (kbd "C-s") 'sp-forward-slurp-sexp)
   (define-key evil-insert-state-map (kbd "C-b") 'sp-forward-barf-sexp)
+
+  (defun my-setup-pipenv-default-directory (orig-fun &rest args)
+    "Workaround to set default directory before calling pipenv functions. Needed
+because pipenv can't handle deeply nested modules."
+    (let ((default-directory (or (pipenv-project?) default-directory)))
+      (message "Advising pipenv to use directory %S" default-directory)
+      (apply orig-fun args)))
+  ;; Fix for nested pipenv modules
+  (advice-add 'pipenv--command :around #'my-setup-pipenv-default-directory)
+
   ;; Space-w-f - close other windows, vsplit this window and focus
   (defun maxi-vsplit-and-focus ()
     (interactive)
