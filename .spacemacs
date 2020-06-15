@@ -514,6 +514,8 @@ before packages are loaded."
    javascript-indent-level 2 ; javascript-mode
    js-indent-level 2 ; js-mode
    js2-basic-offset 2 ; js2-mode, in latest js2-mode it aliases js-indent-level
+   ;; Disable lockfiles since unlikely to have multiple users in same fs
+   create-lockfiles nil
    )
   (setq-default
    ;; override web-beautify-args to include indent of 2
