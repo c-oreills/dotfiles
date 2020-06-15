@@ -10,4 +10,4 @@ data = urllib.urlopen(query).read()
 #print data
 match = re.search('/watch\?v=[\w-]+', data)
 video_url = 'https://www.youtube.com' + match.group(0)
-subprocess.call(('youtube2mp3', '-d', '~/Music', '-y', video_url))
+subprocess.call(('youtube2mp3', '-d', '/home/christy/Music', '-y', video_url))
