@@ -39,8 +39,6 @@ if [ -d "$CLOJURESCRIPT_HOME" ] ; then
     PATH="$CLOJURESCRIPT_HOME/bin:$PATH"
 fi
 
-source `which virtualenvwrapper_lazy.sh`
-
 PATH=./node_modules/.bin:$PATH # Preferentially use local node binaries
 
 export ERL_AFLAGS="-kernel shell_history enabled"
