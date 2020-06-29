@@ -516,6 +516,9 @@ before packages are loaded."
    create-lockfiles nil
    ;; Automatically activate pipenvs so that LSP works without restart
    python-pipenv-activate t
+   lsp-ui-doc-position 'top
+   lsp-ui-doc-alignment 'window
+   lsp-python-ms-extra-paths  ["housekeep"]
    )
   (setq-default
    ;; override web-beautify-args to include indent of 2
