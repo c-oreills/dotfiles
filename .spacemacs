@@ -574,6 +574,7 @@ because pipenv can't handle deeply nested modules."
         ;; Disable separators in powerline
         (setq powerline-default-separator nil)
         ;; Solarized theme
+        (load-theme 'solarized-wombat-dark t)
         (when nil
           (paradox-require 'color-theme-solarized)
           (load-theme 'solarized t)
