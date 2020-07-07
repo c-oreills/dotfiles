@@ -2,5 +2,5 @@
 
 cd ~/.emacs.d;
 git fetch;
-git log develop..origin/develop --oneline | cat;
+git log HEAD..origin/develop --oneline | cat;
 git merge --ff-only --quiet origin/develop;
