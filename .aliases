@@ -46,7 +46,7 @@ alias hpr='hub pull-request'
 # Django
 alias m='./manage.py'
 alias mt='./manage.py test'
-alias ms='./manage.py shell'
+alias ms='./manage.py shell_plus'
 
 # Zephzone
 alias zz='/home/christy/.virtualenvs/zephzone/bin/python /home/christy/projects/zephzone/__init__.py'
