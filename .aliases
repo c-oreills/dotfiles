@@ -55,8 +55,9 @@ alias zzz='/home/christy/.virtualenvs/zephzone/bin/python /home/christy/projects
 # Git log pipe to tig
 function glt () { git log --format="format:commit %H %s" $* | tig; }
 
-# Git search through all committed branches
+# Git search through all committed branches (and remotes)
 function glag () { git grep $1 $(git rev-list --all) }
+function glagr () { git grep $1 $(git ls-remote . 'refs/remotes/*' | cut -f 2) }
 
 # Port forwarding
 function pf () { screen -d -m -S pf_$1_$2 bash -c "ssh -Nv -L $2:127.0.0.1:$2 $1"; } 
