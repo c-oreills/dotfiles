@@ -32,7 +32,23 @@ ZSH_THEME="robbyrussell"
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(git python command-not-found pip ssh-agent vi-mode rvm pipenv pyenv dotenv globalias)
+plugins=(
+    # General shell
+    command-not-found
+    dotenv
+    # globalias # Turn me on for pairing
+    ssh-agent
+    vi-mode
+    # Git
+    git
+    # Python
+    python
+    pip
+    pipenv
+    pyenv
+    # Ruby
+    rvm
+)
 
 source $ZSH/oh-my-zsh.sh
 
