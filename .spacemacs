@@ -561,6 +561,8 @@ because pipenv can't handle deeply nested modules."
     "wf" 'maxi-vsplit-and-focus
     "gn" 'git-gutter+-next-hunk
     "gp" 'git-gutter+-previous-hunk
+    "rt" 'point-to-register
+    "rf" 'jump-to-register
     "\\" 'helm-swoop-symble-pre-input
     "?" 'helm-ag-exact-word)
 
