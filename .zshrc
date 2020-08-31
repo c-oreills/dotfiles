@@ -47,7 +47,7 @@ plugins=(
     pipenv
     pyenv
     # Ruby
-    rvm
+    rbenv
 )
 
 source $ZSH/oh-my-zsh.sh

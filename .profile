@@ -46,7 +46,5 @@ export ERL_AFLAGS="-kernel shell_history enabled"
 # Colour stderr red by preloading stderred
 export LD_PRELOAD="$HOME/.libstderred.so${LD_PRELOAD:+:$LD_PRELOAD}"
 
-# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
-export PATH="$PATH:$HOME/.rvm/bin"
-
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
+# Add rbenv shims to PATH
+export PATH="$HOME/.rbenv/shims:$PATH"

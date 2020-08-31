@@ -59,6 +59,8 @@ This function should only modify configuration layer settings."
      python
      react
      restclient
+     (ruby :variables
+           ruby-version-manager 'rvm)
      shell
      syntax-checking
      version-control
