@@ -77,3 +77,13 @@ bindkey "e[3~" delete-char # Del
 
 # Sort completion by modification date
 zstyle ':completion:*' file-sort modification
+
+# Check swapiness on shell boot
+# To change:
+# Edit /etc/sysctl.conf to include
+# vm.swappiness = 10
+# then
+# sudo sysctl -p
+if [[ $(cat /proc/sys/vm/swappiness) -ne 10 ]];
+    then echo 'vm.swappiness != 10';
+fi;
