@@ -84,6 +84,6 @@ zstyle ':completion:*' file-sort modification
 # vm.swappiness = 10
 # then
 # sudo sysctl -p
-if [[ $(cat /proc/sys/vm/swappiness) -ne 10 ]];
+if [[ -f /proc/sys/vm/swappiness && $(cat /proc/sys/vm/swappiness) -ne 10 ]];
     then echo 'vm.swappiness != 10';
 fi;
