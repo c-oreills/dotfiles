@@ -48,6 +48,9 @@ alias m='./manage.py'
 alias mt='./manage.py test'
 alias ms='./manage.py shell_plus'
 
+# Tmux
+alias tma='tmux attach'
+
 # Zephzone
 alias zz='/home/christy/.virtualenvs/zephzone/bin/python /home/christy/projects/zephzone/__init__.py'
 alias zzz='/home/christy/.virtualenvs/zephzone/bin/python /home/christy/projects/zephzone/__init__.py --no-brain-fm'
