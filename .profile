@@ -26,11 +26,6 @@ if [ -f "$HOME/.profile_home" ]; then
     . "$HOME/.profile_home"
 fi
 
-# include work settings if work file exists
-if [ -f "$HOME/.profile_work" ]; then
-    . "$HOME/.profile_work"
-fi
-
 RUBYOPT=rubygems
 export CLOJURE_EXT=$HOME/.clojure
 export CLOJURESCRIPT_HOME=$HOME/.clojurescript
@@ -48,3 +43,14 @@ export LD_PRELOAD="$HOME/.libstderred.so${LD_PRELOAD:+:$LD_PRELOAD}"
 
 # Add rbenv shims to PATH
 export PATH="$HOME/.rbenv/shims:$PATH"
+
+# Add homebrew
+if [ -f "/opt/homebrew/bin/brew" ] ; then
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+fi
+
+# include work settings if work file exists
+if [ -f "$HOME/.profile_work" ]; then
+    . "$HOME/.profile_work"
+fi
+
