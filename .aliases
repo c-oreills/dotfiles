@@ -13,7 +13,6 @@ alias gp='git push'
 alias gpo='git push origin -u `git rev-parse --abbrev-ref HEAD`'
 alias gpu='git push upstream -u `git rev-parse --abbrev-ref HEAD`'
 alias gpc='git push christy -u `git rev-parse --abbrev-ref HEAD`'
-alias gps="git log origin/develop...HEAD --format=%D | sed 's/HEAD -> //' | sed 's/, /\n/g' | grep -v '^origin/' | xargs git push -f origin"
 alias gl='git log'
 alias gs='git status'
 alias gst='git stash'
@@ -88,6 +87,17 @@ function grepo () { basename $(git rev-parse --show-toplevel); }
 
 # Go to root directory of git repo
 function gdr () { cd $(git rev-parse --show-toplevel)/$1; }
+
+# Git push stacked branches
+function gps () {
+  local stacked_branches=`git log origin/develop...HEAD --format=%D | sed 's/HEAD -> //' | sed 's/, /\n/g' | grep -v '^origin/' | paste -sd ' ' -`;
+  local command="git push -f origin $stacked_branches";
+  echo $command;
+  if read -q "ANSWER?Execute? (y/n) "; then
+    echo;
+    eval $command;
+  fi;
+}
 
 # workon this git repo's virtualenv (or make it if it doesn't exist)
 function wo () { workon $(grepo) || mkvirtualenv $(grepo); }
