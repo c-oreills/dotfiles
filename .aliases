@@ -93,6 +93,7 @@ function gps () {
   local stacked_branches=`git log origin/develop...HEAD --format=%D | sed 's/HEAD -> //' | sed 's/, /\n/g' | grep -v '^origin/' | paste -sd ' ' -`;
   local command="git push -f origin $stacked_branches";
   echo $command;
+  # https://stackoverflow.com/a/61353538
   if read -q "ANSWER?Execute? (y/n) "; then
     echo;
     eval $command;
