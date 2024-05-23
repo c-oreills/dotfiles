@@ -100,6 +100,17 @@ function gps () {
   fi;
 }
 
+# Git pull request auto-merge after checks have passed
+function gpram () {
+  # Defensively ensure that an argument is passed since otherwise gh will
+  # default to the existing branch
+  [ -n "$1" ] &&
+  # Exits with an error code if a check fails
+  gh pr checks $1 --watch --fail-fast &&
+  # Deletes both local and remote branches
+  gh pr merge $1 --squash --delete-branch
+}
+
 # workon this git repo's virtualenv (or make it if it doesn't exist)
 function wo () { workon $(grepo) || mkvirtualenv $(grepo); }
 
