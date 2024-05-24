@@ -100,7 +100,7 @@ function gps () {
   fi;
 }
 
-# Git pull request auto-merge after checks have passed
+# Github pull request auto-merge after checks have passed
 function gpram () {
   # Defensively ensure that an argument is passed since otherwise gh will
   # default to the existing branch
