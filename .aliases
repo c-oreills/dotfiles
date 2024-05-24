@@ -102,8 +102,7 @@ function gps () {
 
 # Github pull request auto-merge after checks have passed
 function gpram () {
-  # Defensively ensure that an argument is passed since otherwise gh will
-  # default to the existing branch
+  # Defensively ensure an arg is passed, otherwise gh will use current branch
   [ -n "$1" ] &&
   # Exits with an error code if a check fails
   gh pr checks $1 --watch --fail-fast &&
@@ -113,8 +112,7 @@ function gpram () {
 
 # Github pull request request review after checks have passed
 function gprrr () {
-  # Defensively ensure that an argument is passed since otherwise gh will
-  # default to the existing branch
+  # Defensively ensure an arg is passed, otherwise gh will use current branch
   [ -n "$1" ] &&
   # Exits with an error code if a check fails
   gh pr checks $1 --watch --fail-fast &&
