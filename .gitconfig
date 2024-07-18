@@ -16,3 +16,5 @@
         default = tracking
 [merge]
         defaultToUpstream = true
+[absorb]
+        maxStack=100
