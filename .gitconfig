@@ -18,3 +18,5 @@
         defaultToUpstream = true
 [absorb]
         maxStack=100
+        autoStageIfNothingStaged = true
+
