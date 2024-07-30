@@ -8,6 +8,7 @@ alias go='gnome-open'
 # Git aliases
 function git() {~/.bin/hub $@}
 alias ga='git add'
+alias gab='git absorb --base HEAD~100'
 alias gap='git add -p'
 alias gp='git push'
 alias gpo='git push origin -u `git rev-parse --abbrev-ref HEAD`'
