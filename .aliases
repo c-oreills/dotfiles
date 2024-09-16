@@ -6,7 +6,6 @@ alias du='du -h'
 alias go='gnome-open'
 
 # Git aliases
-function git() {~/.bin/hub $@}
 alias ga='git add'
 alias gab='git absorb --base HEAD~100'
 alias gap='git add -p'
@@ -42,9 +41,6 @@ alias grhh='git reset --hard HEAD'
 alias grhu='git reset --hard @{u}'
 alias gcp='git cherry-pick'
 alias -g gup='@{u}'
-
-# Hub alias
-alias hpr='hub pull-request'
 
 # Django
 alias m='./manage.py'
