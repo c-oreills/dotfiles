@@ -103,8 +103,7 @@ function gpram () {
   [ -n "$1" ] &&
   # Exits with an error code if a check fails
   gh pr checks $1 --watch --fail-fast &&
-  # Deletes both local and remote branches
-  gh pr merge $1 --squash --delete-branch
+  gh pr merge $1 --squash
 }
 
 # Github pull request request review after checks have passed
