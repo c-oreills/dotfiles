@@ -129,11 +129,28 @@ function gcr () {
     else
         refpattern="refs/remotes/$1/"
     fi
-    branches=("${(@f)$(git for-each-ref --sort=-committerdate --format '%(refname:short)~~(%(committername)~~%(committerdate:relative))~~%(subject)' --count=11 $refpattern | column -ts'~~' | grep -v "^\($1/\)\?\(staging\|master\)\s"
+    branches=("${(@f)$(git for-each-ref --sort=-committerdate --format '%(refname:short)~~(%(committername)~~%(committerdate:relative))~~%(subject)' --count=20 $refpattern | column -ts'~~' | grep -v "^\($1/\)\?\(staging\|master\)\s"
     )}")
     select branch in $branches; do
         if [ x"$branch" != x"" ]; then
             echo $branch | awk '{print $1}' | xargs git checkout
+            return
+        fi
+    done
+}
+
+# Menu of recent branches or remotes, sorted by commit time, for easy deletion
+function gdr () {
+    if (( $# == 0 )); then
+        refpattern=refs/heads/
+    else
+        refpattern="refs/remotes/$1/"
+    fi
+    branches=("${(@f)$(git for-each-ref --sort=-committerdate --format '%(refname:short)~~(%(committername)~~%(committerdate:relative))~~%(subject)' --count=20 $refpattern | column -ts'~~' | grep -v "^\($1/\)\?\(staging\|master\)\s"
+    )}")
+    select branch in $branches; do
+        if [ x"$branch" != x"" ]; then
+            echo $branch | awk '{print $1}' | xargs git branch -D
             return
         fi
     done
