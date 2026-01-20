@@ -351,3 +351,16 @@ augroup reload_vimrc " {
     autocmd!
     autocmd BufWritePost $MYVIMRC source $MYVIMRC
 augroup END " }
+
+"------------------------------------------------------------
+" rebase utils
+"
+
+" Change a line that looks like
+" update-ref refs/heads/my-branch-name
+" into
+" exec git branch -D my-branch-name
+nnoremap <leader>rd :normal! 0df/df/0iexec git branch -D <CR>
+
+" Now do this for the first chunk of the stack
+nnoremap <leader>rs :normal! }kkdgg<CR>:normal! 0df/df/0iexec git branch -D <CR>
