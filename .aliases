@@ -182,6 +182,12 @@ function gbn () { git show-ref | grep `git rev-parse HEAD` | grep -v 'heads/' | 
 # Checks out a local branch to follow a remote branch
 function gcbn () { git checkout -b `gbn` || git checkout `gbn` && git merge --ff-only }
 
+# Find defunct branches...
+function gbd () { git branch -vv | grep '\[.*: gone\]' }
+
+# ... and delete them
+function gbdd () { gbd | awk '{print $1}' | xargs git branch -D }
+
 # Free up space on /boot by cleaning up old kernels
 function bootpurge () { sudo apt-get purge $(dpkg -l linux-{image,headers}-"[0-9]*" | awk '/ii/{print $2}' | grep -ve "$(uname -r | sed -r 's/-[a-z]+//')") }
 
