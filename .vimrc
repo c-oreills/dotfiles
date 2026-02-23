@@ -199,10 +199,10 @@ let mapleader = ","
 "
 
 " Use solarized and force 256 colour terminal
-colorscheme solarized
-let g:solarized_termcolors=256
 set t_Co=256
+let g:solarized_termcolors=256
 set background=dark
+colorscheme solarized
 hi ColorColumn ctermbg=DarkBlue
 
 :set guioptions-=m  "remove menu bar
