@@ -1,0 +1,41 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(gh pr checks*)",
+      "Bash(gh run view*)",
+      "Bash(yarn prettier*)",
+      "Bash(du:*)",
+      "Bash(stack-ci:*)",
+      "Bash(~/.bin/stack-ci:*)",
+      "Bash(/Users/christy/.bin/stack-ci:*)",
+      "Bash(git-edit-commits:*)",
+      "Bash(~/.bin/git-edit-commits:*)",
+      "Bash(/Users/christy/.bin/git-edit-commits:*)",
+      "Bash(./scripts/create_migration.sh:*)",
+      "Bash(scripts/create_migration.sh:*)"
+    ]
+  },
+  "preferredNotifChannel": "iterm2_with_bell",
+  "hooks": {
+    "PreToolUse": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "if jq -e '. | tostring | test(\"/Users/anthropic\")' > /dev/null; then printf '{\"hookSpecificOutput\":{\"hookEventName\":\"PreToolUse\",\"permissionDecision\":\"deny\",\"permissionDecisionReason\":\"Wrong path: user home is /Users/christy, not /Users/anthropic. Retry with the correct path.\"}}'; fi"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "printf '\\a'"
+          }
+        ]
+      }
+    ]
+  }
+}

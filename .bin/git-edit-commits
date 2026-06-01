@@ -1,0 +1,99 @@
+#!/usr/bin/env python3
+"""
+git-edit-commits — start an interactive rebase that pauses at each of the
+given commit SHAs (marking them `edit`), preserving every other pick.
+
+Defaults to `--update-refs` against `origin/develop`.
+
+Examples
+--------
+    git-edit-commits abc1234 def5678
+    git-edit-commits --base develop abc1234
+
+After amending each paused commit, run `git rebase --continue` as usual.
+"""
+
+from __future__ import annotations
+
+import argparse
+import os
+import re
+import subprocess
+import sys
+import tempfile
+import textwrap
+
+
+def main() -> int:
+    p = argparse.ArgumentParser(
+        description="Interactive rebase that pauses at each given commit SHA."
+    )
+    p.add_argument(
+        "shas",
+        nargs="+",
+        help="Commit SHAs (full or prefix) to mark as `edit`.",
+    )
+    p.add_argument(
+        "--base",
+        default="origin/develop",
+        help="Rebase base (default: %(default)s).",
+    )
+    p.add_argument(
+        "--no-update-refs",
+        action="store_true",
+        help="Skip --update-refs (default: pass --update-refs).",
+    )
+    args = p.parse_args()
+
+    # Validate SHAs look like SHAs (hex prefixes).
+    for sha in args.shas:
+        if not re.fullmatch(r"[0-9a-f]{4,40}", sha):
+            print(f"error: not a valid SHA prefix: {sha!r}", file=sys.stderr)
+            return 2
+
+    # Write a tiny editor script that the parent git invokes on the rebase TODO.
+    editor_body = textwrap.dedent(
+        f"""\
+        #!/usr/bin/env python3
+        import re, sys
+        shas = {args.shas!r}
+        with open(sys.argv[1]) as f:
+            lines = f.readlines()
+        out = []
+        for line in lines:
+            m = re.match(r"^pick ([0-9a-f]+) ", line)
+            if m and any(m.group(1).startswith(s) for s in shas):
+                out.append("edit " + line[len("pick "):])
+            else:
+                out.append(line)
+        with open(sys.argv[1], "w") as f:
+            f.writelines(out)
+        """
+    )
+    with tempfile.NamedTemporaryFile(
+        "w", suffix=".py", delete=False, prefix="git-edit-commits-"
+    ) as f:
+        f.write(editor_body)
+        editor_path = f.name
+    os.chmod(editor_path, 0o755)
+
+    cmd = ["git", "rebase", "-i", args.base]
+    if not args.no_update_refs:
+        cmd.append("--update-refs")
+
+    env = {**os.environ, "GIT_SEQUENCE_EDITOR": editor_path}
+    rc = subprocess.call(cmd, env=env)
+
+    # Best-effort cleanup — leave the file behind if rebase hasn't finished;
+    # the OS will clean /tmp eventually.
+    if rc == 0:
+        try:
+            os.unlink(editor_path)
+        except OSError:
+            pass
+
+    return rc
+
+
+if __name__ == "__main__":
+    sys.exit(main())

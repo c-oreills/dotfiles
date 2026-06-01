@@ -1,0 +1,272 @@
+#!/usr/bin/env python3
+"""
+stack-ci — show CI/build status for every PR in the current stack, with full
+error logs for any failing GitHub Actions jobs.
+
+A "stack" is the chain of PRs linked by their base branches: each PR's base is
+the branch of the PR below it, down to the repo's trunk. The chain is
+reconstructed purely from GitHub PR metadata, so it works without Graphite /
+git-machete.
+
+Usage:
+  stack-ci [<branch>|<pr-number>] [options]
+
+  With no positional arg, the stack is anchored at whichever open PR's head
+  branch points at the current HEAD commit.
+
+Options:
+  -c, --context N   Log lines of context before each error marker (default 80)
+  -f, --full        Print each failing job's entire log to stdout
+  -n, --no-logs     Only show check status; don't fetch failure logs
+  -a, --author U    GitHub login whose open PRs form the candidate stack
+                    (default: @me)
+      --all         Consider all open PRs, not just one author's (slower)
+  -h, --help        Show this help
+
+Each failing job's complete log is also saved to a temp dir, printed at the end.
+"""
+
+import argparse
+import json
+import os
+import re
+import subprocess
+import sys
+import tempfile
+
+
+def die(msg: str) -> "NoReturn":  # type: ignore[name-defined]
+    print(f"stack-ci: {msg}", file=sys.stderr)
+    sys.exit(2)
+
+
+def run(cmd: list[str], *, check: bool = True) -> str:
+    """Run a command and return stdout. On failure: raise if check else ''."""
+    res = subprocess.run(cmd, capture_output=True, text=True)
+    if res.returncode != 0:
+        if check:
+            die(f"`{' '.join(cmd)}` failed:\n{res.stderr.strip()}")
+        return ""
+    return res.stdout
+
+
+# ---- Colors (only when stdout is a tty) ------------------------------------
+class C:
+    on = sys.stdout.isatty()
+    BOLD = "\033[1m" if on else ""
+    DIM = "\033[2m" if on else ""
+    RED = "\033[31m" if on else ""
+    GRN = "\033[32m" if on else ""
+    YEL = "\033[33m" if on else ""
+    CYN = "\033[36m" if on else ""
+    RST = "\033[0m" if on else ""
+
+
+TS_ANSI = re.compile(r"^\S+Z\s|\033\[[0-9;]*[A-Za-z]")
+ERROR_MARKER = re.compile(r"##\[error\]")
+JOB_ID = re.compile(r"/actions/runs/\d+/job/(\d+)")
+
+
+def clean_log(text: str) -> list[str]:
+    """Strip the leading GHA timestamp and ANSI escapes from each log line."""
+    out = []
+    for line in text.splitlines():
+        line = re.sub(r"^\S+Z\s", "", line)
+        line = re.sub(r"\033\[[0-9;]*[A-Za-z]", "", line)
+        out.append(line)
+    return out
+
+
+def error_context(lines: list[str], ctx: int, max_markers: int = 3) -> list[str]:
+    """Return the lines leading up to each ##[error] marker.
+
+    GitHub Actions writes `##[error]Process completed…` at the *end* of a failing
+    step, so the meaningful failure output is in the lines just before it. With
+    no marker, fall back to the tail.
+    """
+    markers = [i for i, ln in enumerate(lines) if ERROR_MARKER.search(ln)]
+    if not markers:
+        return lines[-ctx:]
+    chunks: list[str] = []
+    last = -1
+    for end in markers[:max_markers]:
+        start = max(end - ctx, last + 1, 0)
+        chunks.extend(lines[start : end + 1])
+        chunks.append("……")
+        last = end
+    return chunks
+
+
+def main() -> int:
+    p = argparse.ArgumentParser(add_help=False)
+    p.add_argument("start", nargs="?", default=None)
+    p.add_argument("-c", "--context", type=int, default=80)
+    p.add_argument("-f", "--full", action="store_true")
+    p.add_argument("-n", "--no-logs", action="store_true")
+    p.add_argument("-a", "--author", default="@me")
+    p.add_argument("--all", dest="all_authors", action="store_true")
+    p.add_argument("-h", "--help", action="store_true")
+    args = p.parse_args()
+
+    if args.help:
+        print(__doc__.strip())
+        return 0
+
+    for tool in ("gh", "git"):
+        if subprocess.run(["which", tool], capture_output=True).returncode != 0:
+            die(f"{tool} not found")
+    if subprocess.run(
+        ["git", "rev-parse", "--git-dir"], capture_output=True
+    ).returncode != 0:
+        die("not in a git repository")
+
+    repo = run(["gh", "repo", "view", "--json", "nameWithOwner",
+                "-q", ".nameWithOwner"]).strip()
+
+    # ---- Gather candidate PRs ----------------------------------------------
+    print(f"{C.DIM}Fetching open PRs from {repo}…{C.RST}", file=sys.stderr)
+    fields = "number,title,headRefName,baseRefName,url,isDraft"
+    cmd = ["gh", "pr", "list", "--state", "open", "--limit", "300", "--json", fields]
+    if not args.all_authors:
+        cmd += ["--author", args.author]
+    prs = json.loads(run(cmd))
+    if not prs:
+        die(f"no open PRs found (author={args.author})")
+
+    by_num = {pr["number"]: pr for pr in prs}
+    # First PR keyed by head / base branch (stacks are linear in practice).
+    by_head: dict[str, int] = {}
+    by_base: dict[str, int] = {}
+    for pr in prs:
+        by_head.setdefault(pr["headRefName"], pr["number"])
+        by_base.setdefault(pr["baseRefName"], pr["number"])
+
+    # ---- Resolve the starting PR -------------------------------------------
+    start = None
+    if args.start is not None:
+        if args.start.isdigit():
+            start = int(args.start)
+        else:
+            start = by_head.get(args.start)
+            if start is None:
+                die(f"no open PR with head branch '{args.start}'")
+    else:
+        heads = run(
+            ["git", "branch", "--points-at", "HEAD", "--format=%(refname:short)"]
+        ).split()
+        for b in heads:
+            if b in by_head:
+                start = by_head[b]
+                break
+        if start is None:
+            die("no open PR matches the current HEAD; "
+                "pass a branch or PR number explicitly")
+
+    # ---- Reconstruct the stack (bottom -> top) -----------------------------
+    down: list[int] = []  # parents, nearest-first
+    cur = start
+    while True:
+        pr = by_num.get(cur)
+        parent = by_head.get(pr["baseRefName"]) if pr else None
+        if parent is None or parent == start or parent in down:
+            break
+        down.append(parent)
+        cur = parent
+
+    up: list[int] = []  # children, nearest-first
+    cur = start
+    while True:
+        pr = by_num.get(cur)
+        child = by_base.get(pr["headRefName"]) if pr else None
+        if child is None or child == start or child in up:
+            break
+        up.append(child)
+        cur = child
+
+    stack = list(reversed(down)) + [start] + up
+
+    logdir = tempfile.mkdtemp(prefix="stack-ci.")
+
+    print()
+    print(f"{C.BOLD}Stack ({len(stack)} PRs, bottom → top):{C.RST}")
+    for n in stack:
+        title = by_num.get(n, {}).get("title", "(unknown — different author?)")
+        print(f"  #{n:<7} {title}")
+    print()
+
+    overall_fail = 0
+
+    for n in stack:
+        pr = by_num.get(n, {})
+        title = pr.get("title", "(unknown)")
+        head = pr.get("headRefName", "?")
+        base = pr.get("baseRefName", "?")
+        url = pr.get("url", "")
+        draft = f" {C.YEL}[draft]{C.RST}" if pr.get("isDraft") else ""
+
+        print(f"{C.BOLD}{C.CYN}━━━ #{n}  {title}{C.RST}{draft}")
+        print(f"    {C.DIM}{head} → {base}{C.RST}")
+        if url:
+            print(f"    {C.DIM}{url}{C.RST}")
+
+        raw = run(["gh", "pr", "checks", str(n),
+                   "--json", "name,state,bucket,link"], check=False)
+        checks = json.loads(raw) if raw.strip() else []
+        if not checks:
+            print(f"    {C.DIM}(no checks reported){C.RST}\n")
+            continue
+
+        buckets = [c["bucket"] for c in checks]
+        n_pass = buckets.count("pass")
+        n_fail = buckets.count("fail")
+        n_pending = buckets.count("pending")
+        n_skip = buckets.count("skipping") + buckets.count("cancel")
+        print(f"    {C.GRN}{n_pass} passed{C.RST}  "
+              f"{C.RED}{n_fail} failed{C.RST}  "
+              f"{n_pending} pending  {n_skip} skipped")
+
+        if n_fail == 0:
+            print()
+            continue
+        overall_fail = 1
+
+        for c in (c for c in checks if c["bucket"] == "fail"):
+            name, link = c["name"], c.get("link", "")
+            print()
+            print(f"    {C.RED}✗ {name}{C.RST}")
+            if link:
+                print(f"      {C.DIM}{link}{C.RST}")
+            if args.no_logs:
+                continue
+
+            m = JOB_ID.search(link or "")
+            if not m:
+                print(f"      {C.DIM}(no fetchable Actions log for this check){C.RST}")
+                continue
+            jobid = m.group(1)
+
+            raw_log = run(
+                ["gh", "api", f"repos/{repo}/actions/jobs/{jobid}/logs"],
+                check=False,
+            )
+            if not raw_log.strip():
+                print(f"      {C.DIM}(failed to fetch / empty log){C.RST}")
+                continue
+
+            lines = clean_log(raw_log)
+            safe = re.sub(r"[^A-Za-z0-9._-]", "_", name)
+            path = os.path.join(logdir, f"{n}__{safe}.log")
+            with open(path, "w") as fh:
+                fh.write("\n".join(lines) + "\n")
+
+            shown = lines if args.full else error_context(lines, args.context)
+            for ln in shown:
+                print(f"      {ln}")
+        print()
+
+    print(f"{C.DIM}Full job logs saved under: {logdir}{C.RST}")
+    return overall_fail
+
+
+if __name__ == "__main__":
+    sys.exit(main())
