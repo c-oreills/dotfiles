@@ -1,0 +1,165 @@
+#!/usr/bin/env python3
+"""
+repo-tmp — set up a repo-local scratch directory to use instead of /tmp.
+
+The shared /tmp is world-writable: other local users and processes can read,
+tamper with, or pre-stage files there, so scratch output (DB dumps, tokens,
+generated files) can leak or be hijacked via symlink/TOCTOU races. This creates
+a private scratch dir *inside* the current git repo instead, and wires up the
+tooling so Claude Code uses it automatically.
+
+Run it from anywhere inside a git working tree. It will:
+
+  1. Create  <repo-root>/<name>/            (default name: "tmp")
+  2. Exclude  /<name>/  via <git-common-dir>/info/exclude
+     (local-only ignore; nothing is committed)
+  3. Allowlist Read/Write/Edit on that dir in .claude/settings.local.json
+
+Every step is idempotent — re-running makes no duplicate entries.
+
+Usage:
+  repo-tmp [--name DIR] [--dry-run]
+
+Options:
+  -n, --name DIR   Scratch directory name at the repo root (default: tmp)
+      --dry-run    Print what would change without writing anything
+  -h, --help       Show this help
+"""
+
+import argparse
+import json
+import subprocess
+import sys
+from pathlib import Path
+
+
+def git(*args: str) -> str:
+    """Run a git command and return stripped stdout, or exit on failure."""
+    try:
+        out = subprocess.run(
+            ["git", *args],
+            capture_output=True,
+            text=True,
+            check=True,
+        )
+    except subprocess.CalledProcessError as exc:
+        sys.exit(f"repo-tmp: `git {' '.join(args)}` failed: {exc.stderr.strip()}")
+    except FileNotFoundError:
+        sys.exit("repo-tmp: git is not installed or not on PATH")
+    return out.stdout.strip()
+
+
+def ensure_dir(scratch: Path, dry_run: bool) -> None:
+    if scratch.is_dir():
+        print(f"= dir exists       {scratch}")
+        return
+    if dry_run:
+        print(f"+ would create dir {scratch}")
+        return
+    scratch.mkdir(parents=True, exist_ok=True)
+    print(f"+ created dir      {scratch}")
+
+
+def ensure_exclude(exclude_file: Path, patterns: list[str], dry_run: bool) -> None:
+    """Append each pattern to .git/info/exclude if not already present."""
+    existing_lines: set[str] = set()
+    if exclude_file.exists():
+        existing_lines = {
+            line.strip() for line in exclude_file.read_text().splitlines()
+        }
+
+    missing = [p for p in patterns if p not in existing_lines]
+    if not missing:
+        print(f"= exclude current  {exclude_file}")
+        return
+
+    if dry_run:
+        for p in missing:
+            print(f"+ would exclude    {p}  ({exclude_file})")
+        return
+
+    exclude_file.parent.mkdir(parents=True, exist_ok=True)
+    with exclude_file.open("a") as fh:
+        # Keep a trailing newline regardless of the file's prior state.
+        if exclude_file.stat().st_size and not exclude_file.read_text().endswith("\n"):
+            fh.write("\n")
+        for p in missing:
+            fh.write(f"{p}\n")
+    for p in missing:
+        print(f"+ excluded         {p}")
+
+
+def ensure_permissions(settings_file: Path, rules: list[str], dry_run: bool) -> None:
+    """Merge file-access rules into permissions.allow, preserving the rest."""
+    if settings_file.exists():
+        try:
+            data = json.loads(settings_file.read_text() or "{}")
+        except json.JSONDecodeError as exc:
+            sys.exit(f"repo-tmp: {settings_file} is not valid JSON: {exc}")
+    else:
+        data = {}
+
+    allow = data.setdefault("permissions", {}).setdefault("allow", [])
+    missing = [r for r in rules if r not in allow]
+    if not missing:
+        print(f"= perms current    {settings_file}")
+        return
+
+    if dry_run:
+        for r in missing:
+            print(f"+ would allow      {r}  ({settings_file})")
+        return
+
+    allow.extend(missing)
+    settings_file.parent.mkdir(parents=True, exist_ok=True)
+    settings_file.write_text(json.dumps(data, indent=2) + "\n")
+    for r in missing:
+        print(f"+ allowed          {r}")
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser(
+        prog="repo-tmp",
+        description="Set up a repo-local scratch dir to use instead of /tmp.",
+    )
+    parser.add_argument(
+        "-n", "--name", default="tmp",
+        help='Scratch directory name at the repo root (default: "tmp")',
+    )
+    parser.add_argument(
+        "--dry-run", action="store_true",
+        help="Print what would change without writing anything",
+    )
+    args = parser.parse_args()
+
+    name = args.name.strip().strip("/")
+    if not name or "/" in name:
+        sys.exit("repo-tmp: --name must be a single path segment, e.g. tmp")
+
+    root = Path(git("rev-parse", "--show-toplevel")).resolve()
+    # info/exclude lives in the *common* git dir, shared across worktrees.
+    common_dir = Path(git("rev-parse", "--git-common-dir"))
+    if not common_dir.is_absolute():
+        common_dir = (Path.cwd() / common_dir).resolve()
+
+    scratch = root / name
+    exclude_file = common_dir / "info" / "exclude"
+    settings_file = root / ".claude" / "settings.local.json"
+
+    # Absolute path rules use the `//abs/path` form (matching existing entries):
+    # one anchor `/` plus the absolute path, which already begins with `/`.
+    abs_glob = f"/{scratch}/**"
+    perm_rules = [f"Read({abs_glob})", f"Write({abs_glob})", f"Edit({abs_glob})"]
+    exclude_patterns = [f"/{name}/"]
+
+    print(f"repo root: {root}")
+    if args.dry_run:
+        print("(dry run — no files written)\n")
+
+    ensure_dir(scratch, args.dry_run)
+    ensure_exclude(exclude_file, exclude_patterns, args.dry_run)
+    ensure_permissions(settings_file, perm_rules, args.dry_run)
+
+
+if __name__ == "__main__":
+    main()
