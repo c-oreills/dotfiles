@@ -3,6 +3,7 @@
     "allow": [
       "Bash(gh pr checks*)",
       "Bash(gh run view*)",
+      "Bash(gawk --sandbox:*)",
       "Bash(yarn prettier*)",
       "Bash(du:*)",
       "Bash(stack-ci:*)",
@@ -11,11 +12,23 @@
       "Bash(git-edit-commits:*)",
       "Bash(~/.bin/git-edit-commits:*)",
       "Bash(/Users/christy/.bin/git-edit-commits:*)",
+      "Bash(consolidate-fixups:*)",
+      "Bash(~/.bin/consolidate-fixups:*)",
+      "Bash(/Users/christy/.bin/consolidate-fixups:*)",
+      "Bash(runx:*)",
+      "Bash(~/.bin/runx:*)",
+      "Bash(/Users/christy/.bin/runx:*)",
+      "Workflow(scriptPath=*superreview-workflow-local.js*)",
+      "Workflow(scriptPath=*superreview-workflow.js*)",
+      "Workflow(name=superreview*)",
       "Bash(./scripts/create_migration.sh:*)",
-      "Bash(scripts/create_migration.sh:*)"
-    ]
+      "Bash(scripts/create_migration.sh:*)",
+      "Bash(git rm:*)",
+      "Bash(git checkout:*)",
+      "Bash(git rev-parse:*)"
+    ],
+    "defaultMode": "bypassPermissions"
   },
-  "preferredNotifChannel": "iterm2_with_bell",
   "hooks": {
     "PreToolUse": [
       {
@@ -27,15 +40,61 @@
         ]
       }
     ],
+    "Notification": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "$HOME/.claude/hooks/iterm-tab-alert.sh notify"
+          }
+        ]
+      }
+    ],
     "Stop": [
       {
         "hooks": [
           {
             "type": "command",
-            "command": "printf '\\a'"
+            "command": "$HOME/.claude/hooks/iterm-tab-alert.sh waiting"
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "$HOME/.claude/hooks/iterm-tab-alert.sh reset"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "$HOME/.claude/hooks/iterm-tab-alert.sh reset"
           }
         ]
       }
     ]
-  }
+  },
+  "cleanupPeriodDays": 3650,
+  "feedbackSurveyRate": 0,
+  "skillOverrides": {
+    "superreview": "on",
+    "superreview-wf": "on",
+    "superdiff": "on",
+    "specreview": "on",
+    "a-walk-in-the-diff": "on",
+    "review-bot-comments": "on",
+    "add-audit-log": "on",
+    "enable-braintrust-observability": "on"
+  },
+  "skipWorkflowUsageWarning": true,
+  "skipDangerousModePermissionPrompt": true,
+  "preferredNotifChannel": "iterm2",
+  "tui": "fullscreen"
 }
